@@ -1,0 +1,27 @@
+<?php
+
+return [
+    'agree' => 'Şartları kabul ediyorum',
+    'already_member' =>  'Zaten bir üyeliğim var',
+    'email' =>  'E-posta adresi',
+    'failed' => 'Bu bilgiler kayıtlarımızla eşleşmiyor',
+    'forgot_password' =>  'Şifremi unuttum',
+    'login' =>  'Giriş yap',
+    'login_facebook' => ' Facebook\'u kullanarak giriş yapın',
+    'login_google' =>  'Google\'ı kullanarak oturum açın',
+    'login_title' => 'Oturumunuzu başlatmak için kaydolun',
+    'login_twitter' =>  'Twitter\'ı kullanarak oturum açın',
+    'logout' => 'Çıkış Yap',
+    'name' =>  'Tam İsim',
+    'password' => 'Şifre',
+    'password_confirmation' => 'Parolanızı onaylayın',
+    'register' => 'Giriş Yap',
+    'register_new_member' => 'Yeni bir üyelik alın',
+    'remember_me' => 'Beni Hatırla',
+    'remember_password' => ' Yeniden giriş yapmak için şifremi hatırlıyorum',
+    'reset_password' =>  'Sıfırla',
+    'reset_password_title' => 'Yeni şifrenizi giriniz',
+    'reset_title' =>  'Şifreyi sıfırlamak için e-posta gönder',
+    'send_password' => 'Şifre sıfırlama bağlantısı gönder',
+    'throttle' => 'Çok fazla giriş denemesi. Lütfen :saniye içinde tekrar deneyin',
+];

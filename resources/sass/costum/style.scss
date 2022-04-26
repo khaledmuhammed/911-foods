@@ -1,0 +1,176 @@
+// import extra files
+@import "./side-navbar";
+@import "../variables";
+
+* {
+    font-family: "Poppins", sans-serif;
+}
+
+body {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+button,
+i,
+a {
+    border: none;
+    outline: none;
+}
+
+.bg-green {
+    background-color: color(green);
+}
+.text-green {
+    color: color(green);
+}
+.border-green {
+    border: solid color(green);
+}
+.bg-gold {
+    background-color: color(gold);
+}
+.text-gold {
+    color: color(gold);
+}
+.bg-black {
+    background-color: color(black);
+}
+.text-black {
+    color: color(black);
+}
+.rounded {
+    border-radius: $radius;
+}
+.rounded-full {
+    border-radius: 50%;
+}
+
+// top-dropdown-menu
+
+.top-dropdown-menu {
+    width: fit-content;
+    margin-top: 15px;
+    max-width: 200px;
+    overflow: hidden;
+    padding: 0;
+    border: none;
+    background: rgb(250, 249, 249);
+    border-top: 2px solid color(green);
+    .dropdown-item {
+        max-width: 200px;
+        line-height: 35px;
+        border-bottom: 1px solid color(gray);
+        transition: all ease 0.2s;
+        &:hover {
+            border-left: 3px solid color(green);
+            color: color(green);
+            padding-left: 20px;
+        }
+        &:focus {
+            background-color: transparent;
+        }
+    }
+}
+// top nav bar
+.navbar {
+    background-color: rgba(255, 255, 255, 0.9);
+    color: color(black);
+}
+.navbar-v2 {
+    background-color: rgba(255, 255, 255, 0.9);
+    color: color(black);
+}
+.navbar-brand {
+    font-size: 1.5em;
+}
+.nav-link {
+    &:hover {
+        color: color(green);
+    }
+}
+
+.filter {
+    ul {
+        li {
+            line-height: 50px;
+            a {
+                border-left: 5px solid transparent;
+                &:hover {
+                    color: color(green);
+                    background-color: #fafafa;
+                    // border-left-color: color(green);
+                }
+                .down {
+                    transform: translateY(-50%);
+                }
+            }
+            a.avtive {
+                color: color(green);
+                background-color: #fafafa;
+                //border-left-color: color(green);
+                .down {
+                    transform: translateY(-50%) rotate(180deg);
+                }
+            }
+        }
+        ul {
+            li {
+                label {
+                    &:hover {
+                        color: color(green);
+                    }
+                }
+                a {
+                    font-size: 15px;
+                    padding-left: 70px;
+                }
+            }
+        }
+        ul.show {
+            display: block;
+        }
+    }
+}
+
+//  costume range
+.slider-container .bar .fill {
+    background-color: color(green);
+    width: 0%;
+    border: 1 solid black;
+}
+#distance::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    width: 20px;
+    height: 20px;
+    border: 2px solid color(green);
+    background-color: white;
+    border-radius: 50%;
+    transform: rotate(-45deg) translate(0%, 0%);
+    cursor: pointer;
+    outline: none;
+    box-shadow: 0 0 0 0 rgba(255, 255, 255, 0);
+    transition: 0.3s ease-in-out;
+}
+#distance:active::-webkit-slider-thumb,
+#distance::-webkit-slider-thumb:hover {
+    border-bottom-left-radius: 0;
+    transform: rotate(-45deg) translate(75%, -75%);
+}
+#distance:active::-webkit-slider-thumb {
+    box-shadow: 0 0 0 5px color(black);
+}
+.range_v2::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    width: 20px;
+    height: 20px;
+    border: 2px solid color(green);
+    background-color: white;
+    border-radius: 50%;
+    transform: rotate(-45deg) translate(0%, 0%);
+    cursor: pointer;
+    outline: none;
+    box-shadow: 0 0 0 0 rgba(255, 255, 255, 0);
+    transition: 0.3s ease-in-out;
+}

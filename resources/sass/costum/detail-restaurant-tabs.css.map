@@ -1,0 +1,10 @@
+{
+    "version": 3,
+    "mappings": "AAEA,AAAA,MAAM,CAAA;EACF,UAAU,EAAC,6BAA6B;CAa3C;;AAdD,AAGQ,MAHF,CAEF,EAAE,CACE,CAAC,CAAA;EACG,yBAAyB,EAAE,CAAC;EAC5B,0BAA0B,EAAE,CAAC;EAC7B,aAAa,EAAE,SAAS;EACxB,mBAAmB,EAAC,WAAW;CAClC;;AART,AASQ,MATF,CAEF,EAAE,CAOE,CAAC,AAAA,OAAO,CAAA;EACJ,KAAK,ECUP,OAAO;EDTL,mBAAmB,ECSrB,OAAO;CDRR;;AAIT,AAAA,aAAa,GAAE,SAAS,GAAG,CAAC,AAAA,OAAO,CAAE;EACjC,gBAAgB,ECGV,OAAO;CDFhB",
+    "sources": [
+        "detail-restaurant-tabs.scss",
+        "../_variables.scss"
+    ],
+    "names": [],
+    "file": "detail-restaurant-tabs.css"
+}

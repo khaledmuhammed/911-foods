@@ -1,0 +1,75 @@
+.box_help {
+  -webkit-transition: ease 300ms;
+  transition: ease 300ms;
+}
+
+.box_help:hover {
+  margin-top: -2.5%;
+}
+
+#desc.block {
+  -webkit-transition: ease-in-out 2ms;
+  transition: ease-in-out 2ms;
+  -webkit-animation-name: shwo;
+          animation-name: shwo;
+  -webkit-animation-duration: 2s;
+          animation-duration: 2s;
+}
+
+#desc.hidden {
+  -webkit-transition: ease-in-out 2ms;
+  transition: ease-in-out 2ms;
+  -webkit-animation-name: hideblock;
+          animation-name: hideblock;
+  -webkit-animation-duration: 2s;
+          animation-duration: 2s;
+}
+
+@-webkit-keyframes shwo {
+  0% {
+    opacity: 0;
+  }
+  50% {
+    opacity: 50;
+  }
+  100% {
+    opacity: 100;
+  }
+}
+
+@keyframes shwo {
+  0% {
+    opacity: 0;
+  }
+  50% {
+    opacity: 50;
+  }
+  100% {
+    opacity: 100;
+  }
+}
+
+@-webkit-keyframes hideblock {
+  0% {
+    opacity: 100;
+  }
+  50% {
+    opacity: 50;
+  }
+  100% {
+    opacity: 0;
+  }
+}
+
+@keyframes hideblock {
+  0% {
+    opacity: 100;
+  }
+  50% {
+    opacity: 50;
+  }
+  100% {
+    opacity: 0;
+  }
+}
+/*# sourceMappingURL=help-page.css.map */

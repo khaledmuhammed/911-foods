@@ -1,0 +1,22 @@
+@import'../variables';
+
+#myTab{
+    box-shadow:inset  0px -7px 0px -5px #ddd;
+    li{ 
+        a{   
+            border-bottom-left-radius: 0;
+            border-bottom-right-radius: 0;
+            border-bottom: 2px solid; 
+            border-bottom-color:transparent;
+        }
+        a.active{
+            color: color(green);
+            border-bottom-color: color(green);
+        }
+    }
+}
+
+#payment-tabs >.nav-item > a.active  {
+    background-color: color(green);
+}
+ 

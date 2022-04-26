@@ -1,0 +1,1 @@
+(()=>{var e=document.getElementById("map"),t=document.getElementById("open_map"),n=document.getElementById("open_map_phone");t&&t.addEventListener("click",(function(n){e.classList.toggle("hidden"),"Open Map"===t.textContent?t.textContent="Colse Map":t.textContent="Open Map"})),n&&n.addEventListener("click",(function(t){e.classList.toggle("hidden")}))})();

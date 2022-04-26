@@ -1,0 +1,21 @@
+#myTab {
+  -webkit-box-shadow: inset  0px -7px 0px -5px #ddd;
+          box-shadow: inset  0px -7px 0px -5px #ddd;
+}
+
+#myTab li a {
+  border-bottom-left-radius: 0;
+  border-bottom-right-radius: 0;
+  border-bottom: 2px solid;
+  border-bottom-color: transparent;
+}
+
+#myTab li a.active {
+  color: #63D56D;
+  border-bottom-color: #63D56D;
+}
+
+#payment-tabs > .nav-item > a.active {
+  background-color: #63D56D;
+}
+/*# sourceMappingURL=detail-restaurant-tabs.css.map */

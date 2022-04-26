@@ -1,0 +1,126 @@
+#login-tab.active,
+#sign-tab.active {
+    background-color: var(--main_color) !important;
+    color: #fafafa;
+}
+
+.text-green,
+nav.side-bar .links ul li a.active,
+.filter ul li a:hover,
+.filter ul li a.avtive,
+.filter ul ul li label:hover,
+#myTab li a.active,
+.nav-link:hover,
+.top-dropdown-menu .dropdown-item:hover,
+nav.side-bar .links ul li a:hover {
+    color: var(--main_color) !important;
+}
+.custom-btn.active:hover {
+    color: rgb(245, 245, 245) !important;
+}
+.custom-btn:hover {
+    color: var(--main_color) !important;
+}
+
+.input_radio input:checked ~ .checkmark,
+.bg-green,
+nav.side-bar .top,
+.slider-container .bar .fill,
+.input_radio input:checked ~ .checkmark,
+#payment-tabs > .nav-item > a.active,
+#tab.active .input_radio input:checked ~ .checkmark,
+.input_checkbox input:checked ~ .input_checkbox_checkmark {
+    background-color: var(--main_color) !important;
+}
+
+#distance::-webkit-slider-thumb,
+.range_v2::-webkit-slider-thumb {
+    border: 2px solid var(--main_color) !important;
+}
+
+.border-green {
+    border: solid var(--main_color) !important;
+}
+
+nav.side-bar .links ul li a:hover {
+    border-left-color: var(--main_color) !important;
+}
+
+.top-dropdown-menu .dropdown-item:hover {
+    border-left: 3px solid var(--main_color) !important;
+}
+
+#myTab li a.active {
+    border-bottom-color: var(--main_color) !important;
+}
+
+.checkmark-circle,
+.checkmark {
+    stroke: var(--main_color) !important;
+    box-shadow: var(--main_color) !important;
+}
+
+@-webkit-keyframes fill {
+    100% {
+        box-shadow: inset 0px 0px 0px 10px var(--main_color) !important;
+    }
+}
+@keyframes fill {
+    100% {
+        box-shadow: inset 0px 0px 0px 10px var(--main_color) !important;
+    }
+}
+#banner_search_input {
+    width: 800px;
+}
+
+#banner_search_input > input {
+    max-width: 95%;
+}
+
+@media screen and (max-width: 850px) {
+    #banner_search_input {
+        width: 600px;
+    }
+}
+@media screen and (max-width: 750px) {
+    #banner_search_input {
+        width: 500px;
+    }
+}
+@media screen and (max-width: 650px) {
+    #banner_search_input {
+        width: 400px;
+    }
+}
+@media screen and (max-width: 550px) {
+    #banner_search_input {
+        width: 300px;
+    }
+}
+@media screen and (max-width: 350px) {
+    #banner_search_input {
+        width: 200px;
+    }
+}
+#gl {
+    z-index: 1000;
+    top: 0px;
+    left: 0px;
+    position: fixed;
+    width: 100vw;
+    height: 100vh;
+    background-color: rgba(26, 26, 26, 0.8);
+}
+
+#banner_search_input {
+    position: absolute;
+    top: 440px;
+    left: 25%;
+    width: 50% !important;
+    z-index: 100;
+    @media screen and (max-width: 550px) {
+        left: 12.5% !important;
+        width: 75% !important;
+    }
+}

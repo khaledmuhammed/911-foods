@@ -1,0 +1,113 @@
+@import '../variables';
+
+nav.side-bar{
+    position: fixed;
+    z-index: 110;
+    margin-left: -1000px;
+    top: 0;
+    bottom: 0;
+    width: 50%;
+    background-color: color(white);
+    transition: 600ms;
+    transition-timing-function: ease;
+    overflow: hidden;
+    @media screen and (min-width: 850px){
+        display: none;    
+    }
+    #cancel{
+        cursor: pointer;
+        position: absolute;
+        top: 0;
+        right: 20;
+        font-size: 2em;
+        color: color(white);
+        transition: 600ms;
+        &:hover{
+            color: rgb(61, 61, 61);
+            transform: rotate(360deg);
+        }
+        
+        
+    }
+    .top{
+        width: 100%;
+        height: 100px;
+        background-color: color(green);
+        text-align: center;
+        padding-top: 30px;
+        font-size: 1.5em;
+        letter-spacing: 2px;
+        color: color(white);
+        text-shadow: grey 1px 1px 10px ;
+        
+    }
+    .links{
+        ul{
+            height: 100%;
+            width: 100%;
+            list-style-type: none;
+            display: flex;
+            flex-direction: column;
+            li{
+                line-height: 50px;
+                border-bottom: 1px solid #ccc;
+                a.active{
+                    color: color(green); 
+                    background-color: #fafafa;
+                    //border-left-color: color(green);
+                }
+                a{
+                    color: color(black);
+                    position: relative;
+                    text-decoration: none;
+                    font-size: 1em;
+                    padding-left: 40px; 
+                    transition: .1s;
+                    transition-timing-function: ease-in;
+                    display: block;
+                    width: 100%;
+                    border-left: 5px solid transparent;
+                    &:hover{
+                        color: color(green); 
+                        background-color: #fafafa;
+                        border-left-color: color(green);
+                        
+                    }
+                    &:hover{
+                        .down{
+                            transform: translateY(-50%) rotate(180deg);
+                        }
+                    }
+                    .down{
+                        position: absolute;
+                        top: 50%;
+                        right: 30px;
+                        transform: translateY(-50%);
+                        transition: transform .4s;
+                    }
+                }
+                
+            }
+            ul{
+                position: static;
+                display: none;
+                li{
+                    line-height: 40px;
+                    border-bottom: none;
+                    a{
+                        font-size: 15px;
+                        padding-left: 70px;
+                        
+                    }
+                }
+            }
+            ul.show{
+                display: block;
+            }
+
+        }
+
+    }
+}
+
+

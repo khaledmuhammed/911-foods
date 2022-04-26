@@ -1,0 +1,15 @@
+{
+    "/js/app.js": "/js/app.js",
+    "/js/main.js": "/js/main.js",
+    "/js/costum-slick.js": "/js/costum-slick.js",
+    "/js/maps.js": "/js/maps.js",
+    "/css/app.css": "/css/app.css",
+    "/css/checkbox-radio-input.css": "/css/checkbox-radio-input.css",
+    "/css/confirm-delivery.css": "/css/confirm-delivery.css",
+    "/css/style.css": "/css/style.css",
+    "/css/tailwind.css": "/css/tailwind.css",
+    "/css/main.css": "/css/main.css",
+    "/css/help-page.css": "/css/help-page.css",
+    "/css/sign-in.css": "/css/sign-in.css",
+    "/css/detail-restaurant-tabs.css": "/css/detail-restaurant-tabs.css"
+}

@@ -1,0 +1,10 @@
+{
+    "version": 3,
+    "mappings": "AAGA,AAAA,UAAU,AAAA,OAAO,EAAC,SAAS,AAAA,OAAO,CAAA;EAE9B,gBAAgB,ECiBV,OAAO;CDfhB",
+    "sources": [
+        "sign-in.scss",
+        "../_variables.scss"
+    ],
+    "names": [],
+    "file": "sign-in.css"
+}

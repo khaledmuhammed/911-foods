@@ -1,0 +1,66 @@
+/* On mouse-over, add a grey background color */
+.input_radio:hover input ~ .checkmark {
+  background-color: #ccc;
+}
+
+/* When the radio button is checked, add a green background */
+.input_radio input:checked ~ .checkmark {
+  background-color: #63D56D;
+}
+
+/* Create the indicator (the dot/circle - hidden when not checked) */
+.checkmark:after {
+  content: "";
+  position: absolute;
+  display: none;
+}
+
+/* Show the indicator (dot/circle) when checked */
+.input_radio input:checked ~ .checkmark:after {
+  display: block;
+}
+
+/* Style the indicator (dot/circle) */
+.input_radio .checkmark:after {
+  top: 5px;
+  left: 5px;
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: white;
+}
+
+/* On mouse-over, add a grey background color */
+.input_checkbox:hover input ~ .input_checkbox_checkmark {
+  background-color: #ccc;
+}
+
+/* When the checkbox is checked, add a blue background */
+.input_checkbox input:checked ~ .input_checkbox_checkmark {
+  background-color: #63D56D;
+}
+
+/* Create the checkmark/indicator (hidden when not checked) */
+.input_checkbox_checkmark:after {
+  content: "";
+  position: absolute;
+  display: none;
+}
+
+/* Show the checkmark when checked */
+.input_checkbox input:checked ~ .input_checkbox_checkmark:after {
+  display: block;
+}
+
+/* Style the checkmark/indicator */
+.input_checkbox .input_checkbox_checkmark:after {
+  left: 7px;
+  top: 2px;
+  width: 5px;
+  height: 15px;
+  border: solid white;
+  border-width: 0 3px 3px 0;
+  -webkit-transform: rotate(45deg);
+          transform: rotate(45deg);
+}
+/*# sourceMappingURL=checkbox-radio-input.css.map */

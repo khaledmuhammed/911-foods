@@ -1,0 +1,26 @@
+.box_help{
+    transition: ease 300ms ;
+    &:hover{
+        margin-top: -2.5%;
+    }
+}
+#desc.block{
+    transition: ease-in-out 2ms ;
+    animation-name: shwo;
+    animation-duration: 2s;
+}
+#desc.hidden{
+    transition: ease-in-out 2ms ;
+    animation-name: hideblock;
+    animation-duration: 2s;
+}
+@keyframes shwo {
+    0%   { opacity: 0; }
+    50% {opacity: 50;}
+    100% {opacity: 100; }
+}
+@keyframes hideblock {
+    0%   { opacity: 100; }
+    50% {opacity: 50;}
+    100% {opacity: 0; }
+}
