@@ -46,3 +46,17 @@
 </div>
 @endsection
 
+{{-- @php
+  $earnings = App\Models\Earning::orderBy('created_at', 'desc')->get();
+  $vaild_earning = [];
+
+  for ($i=0; $i <count($earnings) ; $i++) {
+      // dd($earnings[$i]['total_earning']);
+      if($earnings[$i]['total_earning'] != null && $earnings[$i]['admin_earning'] != null){
+          $vaild_earning[$i] =  abs( $earnings[$i]['total_earning'] - $earnings[$i]['admin_earning'] ) ;
+      }else{
+          $vaild_earning[$i] = ' - ';
+      }
+  }
+  dd($vaild_earning);
+@endphp --}}

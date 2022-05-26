@@ -22,7 +22,7 @@ Route::prefix('/faq')->group(function () {
 });
 Route::prefix('/markets')->group(function () {
     #/api/markets/search?search=
-    Route::get('/search', [MarketController::class, 'search']);
+    // Route::get('/search', [MarketController::class, 'search']);
     Route::get('/total', [MarketController::class, 'total']);
     Route::get('/topRated', [MarketController::class, 'topRated']);
     Route::get('/detail/{market:id}', [MarketController::class, 'show']);
@@ -57,6 +57,8 @@ Route::prefix('/galleries')->group(function () {
 Route::prefix('/favorites')->group(function () {
     Route::post('/{product_id}/{user_id}', [FavoriteController::class, 'store']);
 });
-Route::prefix('/orderPayment')->group(function () {
-    Route::get('/paymob/{order_id}', [MainController::class, 'paymob_mobile_wallet']);
-});
+
+Route::get('payments/paymob/checkout', [MainController::class, 'paymob_checkout']);
+// to solve api problem with search on the app
+Route::get('market/search/', [MainController::class, 'search']);
+

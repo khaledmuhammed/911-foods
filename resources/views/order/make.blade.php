@@ -153,7 +153,7 @@
                         </header>
                         <div class="bg-white p-4 rounded-b-sm">
                             <ul id="payment-tabs" class="nav nav-pills mb-3 flex flex-col md:flex-row" id="pills-tab" role="tablist">
-                                <li class="nav-item flex-1 text-md" role="presentation">
+                                <li id="card_li" class="nav-item flex-1 text-md" role="presentation">
                                     <a class="nav-link flex justify-between items-center" onclick="setMethod('card')" id="pills-home-tab" data-toggle="pill" href="#pills-home" role="tab" aria-controls="pills-home" aria-selected="true" >
                                         {{__('Pay with Paymob')}}
                                         <i class="fas fa-wallet text-lg ml-2"></i>
@@ -168,8 +168,8 @@
                                 </li>
                                     
                             </ul>
-                            <div class="tab-content" id="pills-tabContent">
-                                <div class="tab-pane fade" id="pills-contact" role="tabpanel" aria-labelledby="pills-contact-tab">
+                            {{-- <div class="tab-content" id="pills-tabContent"> --}}
+                                {{-- <div class="tab-pane fade" id="pills-contact" role="tabpanel" aria-labelledby="pills-contact-tab">
                                     <p class=" text-gray-900 text-3xl my-7">
                                         {{__('Pay with Cash')}}
                                     </p>
@@ -178,7 +178,7 @@
                                     <p class=" text-gray-900 text-3xl my-7">
                                         {{__('Pay with Credit card')}}
                                     </p>
-                                </div>
+                                </div> --}}
                                 {{-- <div class="tab-pane fade" id="pills-profile" role="tabpanel" aria-labelledby="pills-profile-tab">
                                     <p class=" text-gray-900 text-3xl my-7">
                                         {{__('Comming soon')}}
@@ -189,7 +189,7 @@
                                         {{__('Comming soon')}}
                                     </p>
                                 </div> --}}
-                            </div>
+                            {{-- </div> --}}
                         </div>
                     </div>
                 </div>
@@ -264,6 +264,7 @@
                 // custom check for order type
                 if(order.orderType === "TakeAway"){
                     document.getElementById("cash_li").innerHTML = "";
+                    // document.getElementById("card_li").innerHTML = "";
                     document.getElementById("pills-home-tab").classList.add("active");
                 }
                 //functions
@@ -339,7 +340,7 @@
                             "category":product.productCategory
                         })
                     })   
-                    var tax = order.market.default_tax;   
+                    var tax = order.market.admin_commission;   
                     var total = order.total ;      
                     products.forEach(product => {
                         var dis = 0 
@@ -427,7 +428,8 @@
                     if (default_currency === null || currency_right === null) {wait()}
                     else{
                         
-                        var tax = order.market.default_tax;   
+                        var tax = order.market.admin_commission; //changed by khaled
+                        // alert(tax);  
                         var total = order.total ;         
                         if(order.orderType !== "TakeAway"){
                             document.getElementById("delivery_fee").textContent=showPrice(order.delivery_fee); 
@@ -457,6 +459,7 @@
                         document.getElementById("order").setAttribute("value",JSON.stringify(order));//undefined
                     
                         if(setMethod.value === undefined && order.orderType == "TakeAway"){    
+                            // alert('hi');
                             document.getElementById("payment_method").setAttribute("value",'card');
                         }else if(setMethod.value === undefined  ){
                             document.getElementById("payment_method").setAttribute("value",'cash');

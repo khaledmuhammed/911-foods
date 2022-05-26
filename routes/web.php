@@ -11,9 +11,11 @@ use \App\Http\Controllers\MarketController;
 use \App\Http\Controllers\ReviewController;
 use \App\Http\Controllers\OrderController;
 use \App\Http\Controllers\Auth\AuthSocialiteController;
+use \App\Http\Controllers\Auth\UserController;
 
 Auth::routes();
 Route::view('/help', 'pages.help');
+Route::view('/privacy-policy', 'pages.privacy-policy');
 Route::get('/', [HomeController::class, 'index']);
 Route::get('/search', [HomeController::class, 'search']);
 Route::get('/category/{category:id}', [CategoryController::class, 'index']);
@@ -27,7 +29,10 @@ Route::prefix('/markets')->group(function () {
 Route::middleware('auth')->group(function () {
     Route::redirect('/home', '/');
     Route::view('/my-account', 'auth.account.profile');
+    Route::get('/my-account/edit/{id}', [UserController::class, 'edit']);
+    Route::post('/my-account/update', [UserController::class, 'update']);
     Route::view('/contact-us', 'pages.contactus');
+    Route::post('/contact-us/store', [HomeController::class, 'contact_us_store'])->name('contact-us.store');
     Route::view('/wishlist', 'pages.wishlist');
     Route::get('/favorites/product/{skip}', [HomeController::class, 'favoriteProducts']);
     Route::prefix('/markets')->group(function () {

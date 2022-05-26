@@ -28,7 +28,7 @@
   "Get directions": "الاتجاهات",
   "Delivery fee": "تكاليف التوصيل",
   "Tax": "الضريبة",
-  "Valider": "Valider",
+  "Valider": "فحص",
   "Select a topic": "اختار نوع",
   "Select a topic description": "select a topic to read the answer of any questions about",
   "No Topic is Found": "لا يوجد انواع",
@@ -78,10 +78,10 @@
   "Delivery Addres description": "تفاصيل عنوان التوصيل",
   "Hint": "ملاحظات",
   "Payment Method": "طريقة الدفع",
-  "Pay with Cash": "دفع كاش",
-  "Pay with Paypal": "دفع بايبال",
+  "Pay with Cash": "كاش",
+  "Pay with Paypal": "كارت",
   "Pay with Credit card": "دفع بالبطاقة الائتمانية",
-  "Pay with Paymob": "دفع بايموب",
+  "Pay with Paymob": "دفع كارت",
   "Pay with Cash description": "دفع كاش",
   "Comming soon": "قريبا !",
   "Order Summary": "تفاصيل الطلب",
@@ -120,7 +120,7 @@
   "reviews >1": "سئ",
   "Leave review": "قيمنا",
   "Average rating": "متوصل التقيمات",
-  "Order Summary description": "Lorem ipsum dolor sit ",
+  "Order Summary description": "يرجى التحقق من طلبك ",
   "With Options": "خيارات",
   "Make your Order description": "Lorem ipsum dolor sit amet consectetur adipisicing elit",
   "Share": "نشر",
@@ -178,6 +178,8 @@
   "Happy to Contact": "نحن سعداء بتواصلك معنا",
   "Contact description": "سجل بياناتك وسوف نقوم بالرد عليك فى اقرب وقت",
   "Help description": "بحاجة الى مساعدة او لديك اي استفسار؟ لا تتردد ، يمكنك التواصل معنا مباشرة عبر",
-  "To Get More Info": "للحصول على المزيد من المعلومات ."
+  "To Get More Info": "للحصول على المزيد من المعلومات .",
+  "Edit My account": "تعديل بيانات حسابي",
+  "Edit": "تعديل"
 }
 

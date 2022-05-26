@@ -17,9 +17,9 @@
 				<h2 class="text-2xl font-bold md:text-5xl text-white my-2">
                     {{__('favorites_banner_header')}}
                 </h2>
-				<p class="text-white text-xl font-semibold my-2 "> 
+				{{-- <p class="text-white text-xl font-semibold my-2 "> 
                     {{__('favorites_banner_description')}}
-                </p>
+                </p> --}}
 			</div>
 		</div>
 		<section class="flex flex-col">
@@ -31,9 +31,9 @@
                     <h2 class="text-black text-4xl font-medium py-1 text-center" >
                         {{__('favorites_header')}}
                     </h2>
-                    <p class="text-gray-600 text-md font-normal  py-1 text-center">
+                    {{-- <p class="text-gray-600 text-md font-normal  py-1 text-center">
                         {{__('favorites_description')}}
-                    </p>
+                    </p> --}}
 				</div>
                 <favorites @auth :idAuth={{auth()->id()}} @endauth></favorites>
             </div>        

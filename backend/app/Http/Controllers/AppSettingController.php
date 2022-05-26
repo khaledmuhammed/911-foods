@@ -213,6 +213,7 @@ class AppSettingController extends Controller
             }
         }
         $upload = $this->uploadRepository->findByField('uuid', setting('app_logo'))->first();
+        
 
         $currencies = $this->currencyRepository->all()->pluck('name_symbol', 'id');
 

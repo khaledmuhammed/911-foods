@@ -27,7 +27,7 @@
   "Get directions": "Get directions",
   "Delivery fee": "Delivery fee",
   "Tax": "Tax",
-  "Valider": "Valider",
+  "Valider": "Validate",
   "Select a topic": "Select a topic",
   "Select a topic description": "select a topic to read the answer of any questions about",
   "No Topic is Found": "No Topic is Found",
@@ -81,10 +81,10 @@
   "Delivery Addres description": "Delivery Addres description",
   "Hint": "Hint",
   "Payment Method": "Payment Method",
-  "Pay with Cash": "Pay with Cash",
+  "Pay with Cash": "Cash on Delivery",
   "Pay with Paypal": "Pay with Paypal",
-  "Pay with Credit card": "Pay with Credit card",
-  "Pay with Paymob": "Pay with Paymob",
+  "Pay with Credit card": "Pay with Card",
+  "Pay with Paymob": "Credit Card",
   "Pay with Cash description": "Pay with Cash",
   "Comming soon": "Comming soon",
   "Order Summary": "Order Summary",
@@ -123,7 +123,7 @@
   "reviews >1": "Disappointed",
   "Leave review": "Leave review",
   "Average rating": "Average rating",
-  "Order Summary description": "Lorem ipsum dolor sit ",
+  "Order Summary description": "Please Check Your Order",
   "With Options": "With Options",
   "Make your Order description": "Lorem ipsum dolor sit amet consectetur adipisicing elit",
   "Share": "Share",
@@ -179,5 +179,8 @@
   "Happy to Contact": "We would love to hear from you\n",
   "Contact description": "Please submit your information and we will get back to you.",
   "Help description": "Need help or have any query? Don't hesitate, you can directly shoot us an",
-  "To Get More Info": "or  page to get more information about our site."
+  "To Get More Info": "or  page to get more information about our site.",
+  "Edit My account": "Edit My account",
+  "Edit": "Edit"
+  
 }

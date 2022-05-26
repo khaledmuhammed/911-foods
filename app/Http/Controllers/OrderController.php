@@ -56,15 +56,16 @@ class OrderController extends Controller
         ]);
         try {
             $response = $this->makeOrder($request);
-
+            
             if ($response[0] instanceof Market && $response[1] instanceof Order) {
                 if ($request->payment_method == "card") {
                     $this->credit($response[1]);
                 }
                 return redirect("/order/confirm")->with('market', $response[0])->with('order', $response[1]);
-            };
+            }
             return redirect("/order/not-confirm")->with('message', "Order Not confirmed");
         } catch (\Throwable $th) {
+            // dd($th->getMessage());
             return redirect('/order/not-confirm')->with('message', "Order Not confirmed");
         }
     }
@@ -89,8 +90,9 @@ class OrderController extends Controller
     {
         $lat = $_COOKIE['lat'];
         $lon = $_COOKIE['lng'];
-
+        
         $order = collect(json_decode($request->order, true));
+        
         $user = auth()->user();
         $market = Market::findOrFail($order->get('market')['id']);
 
@@ -98,9 +100,7 @@ class OrderController extends Controller
             return;
         }
 
-
         if (!empty($_COOKIE['lat'])) {
-
             $distanceMarket = Market::select(DB::raw("6371 * acos(cos(radians(" . $lat . "))
                 * cos(radians(latitude))
                 * cos(radians(longitude) - radians(" . $lon . "))
@@ -109,11 +109,14 @@ class OrderController extends Controller
             // dd($market->delivery_range);
             // if ($distanceMarket->distance > 3)
             //     return view('order.not_confirm');
-            if ($distanceMarket->distance > $market->delivery_range)
+            // dd($distanceMarket->distance ."***********************". $market->delivery_range);
+            if ($distanceMarket->distance > $market->delivery_range){
                 return view('order.not_confirm');
+            }
         }
-        if (empty($_COOKIE['lat']))
+        if (empty($_COOKIE['lat'])){
             return view('order.not_confirm');
+        }
 
 
         $totalPrice = 0;
@@ -135,6 +138,7 @@ class OrderController extends Controller
                 'numberOfMeals' => $theOrder['numberOfMeals'],
             ]);
         }
+        
         if ($order->get('orderType') == 'Delivery') {
             $totalPrice = $totalPrice + $market->delivery_fee;
         }
@@ -153,14 +157,22 @@ class OrderController extends Controller
                         } else {
                             $dis = 0;
                         }
+                        
                         $totalPrice = $totalPrice - $dis * $order["numberOfMeals"];
+
+                        if( $dis != 0){
+                            $coupon['count'] = $coupon['count'] + 1;
+                            $coupon->save();
+                        }
                     }
                 }
             }
         }
         // dd('order ready to go');
-        $tax = $market->default_tax;
+        // $tax = $market->default_tax;
+        $tax = $market->admin_commission;
         $totalPrice = $totalPrice + $totalPrice * $tax / 100;
+
         $payment = Payment::create([
             "price" => $totalPrice,
             "user_id" => $user->id,
@@ -210,28 +222,28 @@ class OrderController extends Controller
                 "quantity" => $theOrder["numberOfMeals"],
                 "price" => $theOrder["product"]->price,
             ]);
-            $cart = Cart::create([
-                'product_id' => $theOrder["product"]->id,
-                'user_id' => $user->id,
-                'quantity' => $theOrder["numberOfMeals"]
-            ]);
+            // $cart = Cart::create([
+            //     'product_id' => $theOrder["product"]->id,
+            //     'user_id' => $user->id,
+            //     'quantity' => $theOrder["numberOfMeals"]
+            // ]);
             foreach ($theOrder['productOptions'] as $productOptions) {
                 ProductOrderOption::create([
                     "product_order_id" => $productOrder->id,
                     "option_id" => $productOptions->id,
                     "price" => $productOptions->price,
                 ]);
-                CartOption::create([
-                    'option_id' => $productOptions->id,
-                    'cart_id' => $cart->id
-                ]);
+                // CartOption::create([
+                //     'option_id' => $productOptions->id,
+                //     'cart_id' => $cart->id
+                // ]);
             }
         }
-        //dd( Notification::send($order->productOrders[0]->product->market->users, new NewOrder($order))$order;
+
+        // Notification::send($order->productOrders[0]->product->market->users, new NewOrder($order));
 
         return [$market, $order];
     }
-
 
 
     //start paymob getway functions 
@@ -349,15 +361,21 @@ class OrderController extends Controller
         $hased = hash_hmac('sha512', $connectedString, $secret);
 
         $db_order = Order::where('id', $request['merchant_order_id'])->first();
+        
         if ($hased == $hmac) {
             $db_order->update(['order_status_id' => 2]); // status 'Preparing'    
             $db_order->payment->update(['description' => 'Order Payed', 'status' => 'Paid']);
+            // delete user cart and cart options
+            Cart::where('user_id', $db_order->user_id)->delete();
 
             return redirect("/order/confirm")->with('market', $db_order->productOrders[0]->product->market)->with('order', $db_order);
             exit;
         }
         $db_order->update(['order_status_id' => 7]); // status 'Canceled'
         Payment::where('id', $db_order->payment_id)->update(['description' => 'Order not Payed', 'status' => 'Not paid']);
+        // delete user cart and cart options
+        Cart::where('user_id', $db_order->user_id)->delete();
+        
         return redirect("/order/not-confirm")->with('message', "Order Not confirmed");
         exit;
     }

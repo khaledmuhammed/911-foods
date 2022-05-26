@@ -1066,6 +1066,7 @@ return [
     'coupon_product_id_help' => 'The coupon will applied on selected products',
     'coupon_category_id' => 'Categories',
     'coupon_category_id_help' => 'The coupon will applied on selected categories',
+    'coupon_count' => 'number of use',
     'slide' => 'Slide',
     'slide_plural' => 'Slides',
     'slide_desc' => 'Slides Management',

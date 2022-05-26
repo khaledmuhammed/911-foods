@@ -1047,6 +1047,7 @@ return [
     'coupon_product_id_help' => 'سيتم تطبيق القسيمة على المنتجات المختارة',
     'coupon_category_id' => 'الفئات',
     'coupon_category_id_help' => 'سيتم تطبيق القسيمة على الفئات المحددة',
+    'coupon_count' => 'عدد مرات الاستخدام',
     'slide' => 'الانزلاق',
     'slide_plural' => 'الشرائح',
     'slide_desc' => 'إدارة الشرائح',

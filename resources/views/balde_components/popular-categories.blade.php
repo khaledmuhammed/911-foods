@@ -7,9 +7,9 @@
             <h2 class="text-black text-4xl font-bold py-1">
                 {{__("popular_categories")}}
             </h2>
-            <p class="text-gray-600 text-md font-normal  py-1">
+            {{-- <p class="text-gray-600 text-md font-normal  py-1">
                 {{__("popular_categories_description")}}
-            </p>
+            </p> --}}
         </div>
         <div class="h-full w-full  slider">
             @foreach ($categorys as $category)

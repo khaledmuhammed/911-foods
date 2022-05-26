@@ -82,6 +82,11 @@ class CouponDataTable extends DataTable
 
             ],
             [
+                'data' => 'count',
+                'title' => trans('lang.coupon_count'),
+
+            ],
+            [
                 'data' => 'updated_at',
                 'title' => trans('lang.coupon_updated_at'),
                 'searchable' => false,

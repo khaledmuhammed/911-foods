@@ -9,7 +9,8 @@
         
             <div class="grid grid-cols-7  pt-6 pb-2">
                 <div class="col-span-3 md:col-span-2 lg:col-span-1 flex flex-row  items-center">
-                    <img src="{{auth()->user()->getFirstMediaUrl('avatar')}}" class="rounded-full object-cover w-36 h-36 mb-2 shadow-xl" alt="user avatar">   
+                    <img src="{{ !empty(auth()->user()->hero_image) ? url('/images/users\/').auth()->user()->hero_image :  auth()->user()->getFirstMediaUrl('avatar')}}" class="rounded-full object-cover w-36 h-36 mb-2 shadow-xl" alt="user avatar">   
+                    {{-- <img src="{{auth()->user()->hero_image}}" class="rounded-full object-cover w-36 h-36 mb-2 shadow-xl" alt="user avatar">    --}}
                 </div>
                 <div class="col-span-4 md:col-span-5 lg:col-span-6 mx-2 md:mx-1 flex  flex-col justify-center text-black ">
                     <p class="text-black font-bold text-4xl md:text-7xl">
@@ -23,7 +24,10 @@
                     </p> 
                     <p class="text-gray-400 font-medium text-xs italic">
                         {{ __('Client acount')}} 
-                    </p>    
+                    </p>
+                    <a aria-current="page" href="{{url('/my-account/edit/'.auth()->user()->id)}}" class="nav-link "><i class="fas fa-edit mr-1   "></i>
+                        {{ __('Edit My account')}}
+                    </a>
                 </div>
             </div>
             {{-- My orders --}}

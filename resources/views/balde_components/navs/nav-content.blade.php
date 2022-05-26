@@ -1,7 +1,10 @@
 <!-- navbar-brand -->
 <div >
     <button id="show-side-bar" class="md:hidden nav-link absolute left-4 top-2 w-10 h-10 outline-none text-lg border-none"><i class="fas fa-align-left"></i></button>
-    <a class="navbar-brand font-semibold hover:text-gray-900" href="/">{{ setting('app_name') }} </a>
+    {{-- <a class="navbar-brand font-semibold hover:text-gray-900" href="/">{{ setting('app_name') }} </a> --}}
+    <a class="navbar-brand font-semibold hover:text-gray-900" href="/">
+        <img src="{{ isset($app_logo) ? $app_logo : null}}" alt="911-Logo" style=" height: 85px;width: 90px;margin-top: 25px;">
+    </a>
     @guest
         <a class="nav-link md:hidden absolute right-6 top-3 w-10 h-10 text-lg" href="/login">
             <i class="fas fa-sign-in-alt"></i>

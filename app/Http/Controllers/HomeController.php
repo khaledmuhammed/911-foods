@@ -69,4 +69,17 @@ class HomeController extends Controller
         }
         return response()->json(["products" => $products]);
     }
+    public function contact_us_store(Request $request)
+    {
+        // dd($request);
+        $data = [
+            'name' => $request->name,
+            'email' => $request->email,
+            'phone' => $request->phone,
+            'message' => $request->message,
+        ];
+        dd($data);
+        
+        // return response()->json(["products" => $products]);
+    }
 }

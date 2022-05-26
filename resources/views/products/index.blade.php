@@ -50,9 +50,9 @@
                             {{__("Total")}} {{$total}}
                         </a>
                     </div>
-                    <p class="text-gray-400">
+                    {{-- <p class="text-gray-400">
                         {{__("products_header_description")}}
-                    </p>
+                    </p> --}}
                 </div>
             {{-- products boxes --}}
                 <section class="container py-4 w-full flex flex-col lg:flex-row ">

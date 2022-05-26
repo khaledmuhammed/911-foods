@@ -24,6 +24,7 @@ class EarningDataTable extends DataTable
      */
     public function dataTable($query)
     {
+        
         $dataTable = new EloquentDataTable($query);
         $columns = array_column($this->getColumns(), 'data');
         $dataTable = $dataTable
@@ -35,13 +36,18 @@ class EarningDataTable extends DataTable
                 return getDateColumn($earning, 'updated_at');
             })
             ->editColumn('total_earning', function ($earning) {
-                return getPriceColumn($earning,'total_earning');
+                $total_earnings =   getPriceColumn($earning, 'total_earning');
+                return $total_earnings;
             })
             ->editColumn('admin_earning', function ($earning) {
-                return getPriceColumn($earning,'admin_earning');
+                $admin_earnings =   getPriceColumn($earning, 'admin_earning');
+                return $admin_earnings;
             })
             ->editColumn('market_earning', function ($earning) {
                 return getPriceColumn($earning,'market_earning');
+            })
+            ->addColumn('vaild_earning', function ($earning) {
+                return getPriceColumn($earning, 'vaild_earning');
             })
             ->editColumn('delivery_fee', function ($earning) {
                 return getPriceColumn($earning,'delivery_fee');
@@ -86,6 +92,12 @@ class EarningDataTable extends DataTable
             [
                 'data' => 'market_earning',
                 'title' => trans('lang.earning_market_earning'),
+
+            ],
+            [
+                'data' => 'vaild_earning',
+                // 'title' => trans('lang.earning_market_earning'),
+                'title' => 'Vaild Earning',
 
             ],
             [

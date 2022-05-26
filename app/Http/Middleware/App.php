@@ -17,10 +17,13 @@ class App
     public function handle($request, Closure $next)
     {
         try {
+            // dd(setting('app_logo', '') );
             $upload = Upload::where('uuid', setting('app_logo', ''))->first();
-            $appLogo = asset('images/logo.png');
+            $appLogo = asset('images/logo/logo.png');
+            // dd($appLogo);
             if ($upload && $upload->hasMedia('app_logo')) {
-                $appLogo = $upload->getFirstMediaUrl('app_logo');
+                // $appLogo = $upload->getFirstMediaUrl('app_logo');
+                $appLogo = asset('images/logo/logo.png');
             }
             view()->share('app_logo', $appLogo);
         } catch (Exception $exception) {

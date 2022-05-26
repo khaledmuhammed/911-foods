@@ -4,7 +4,10 @@
             <div class="w-full px-0 h-40 lg:w-1/4 md:w-1/2">
                 <div class=" -m-5 ">
                     {{-- <a href="/"> <img src="{{$app_logo}}" alt="app_logo" class="h-20 ml-2 mt-2" style="max-width:300px;display: inline-block"> </a> --}}
-                    <p class="text-lg text-gray-200 mx-3 font-semibold ">{{setting('app_name')}}</p>
+                    {{-- <p class="text-lg text-gray-200 mx-3 font-semibold ">{{setting('app_name')}}</p> --}}
+                    <a class="navbar-brand font-semibold hover:text-gray-900" href="/">
+                        <img src="{{ isset($app_logo) ? $app_logo : null}}" alt="911-Logo" style=" height: 104px; width: 150px; margin-left: 25px; margin-top: 20px;">
+                    </a>
 {{--                    <p class="text-sm text-gray-200 mx-3 ">{{setting('app_short_description')}}</p>--}}
                 </div>
             </div>
