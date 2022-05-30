@@ -265,4 +265,5 @@ class ProductController extends Controller
             Log::error($e->getMessage());
         }
     }
+  
 }

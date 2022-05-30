@@ -240,6 +240,7 @@ class OrderController extends Controller
             }
         }
 
+        // test
         // Notification::send($order->productOrders[0]->product->market->users, new NewOrder($order));
 
         return [$market, $order];
@@ -326,56 +327,63 @@ class OrderController extends Controller
     }
     public function callback(Request $request)
     {
+        // dd($request);
         $data = $request->all();
         ksort($data);
         $hmac = $data['hmac'];
-        $array = [
-            'amount_cents',
-            'created_at',
-            'currency',
-            'error_occured',
-            'has_parent_transaction',
-            'id',
-            'integration_id',
-            'is_3d_secure',
-            'is_auth',
-            'is_capture',
-            'is_refunded',
-            'is_standalone_payment',
-            'is_voided',
-            'order',
-            'owner',
-            'pending',
-            'source_data_pan',
-            'source_data_sub_type',
-            'source_data_type',
-            'success',
-        ];
-        $connectedString = '';
-        foreach ($data as $key => $element) {
-            if (in_array($key, $array)) {
-                $connectedString .= $element;
+        $success = $data['success'];
+        if($success == true){
+            $array = [
+                'amount_cents',
+                'created_at',
+                'currency',
+                'error_occured',
+                'has_parent_transaction',
+                'id',
+                'integration_id',
+                'is_3d_secure',
+                'is_auth',
+                'is_capture',
+                'is_refunded',
+                'is_standalone_payment',
+                'is_voided',
+                'order',
+                'owner',
+                'pending',
+                'source_data_pan',
+                'source_data_sub_type',
+                'source_data_type',
+                'success',
+            ];
+            $connectedString = '';
+            foreach ($data as $key => $element) {
+                if (in_array($key, $array)) {
+                    $connectedString .= $element;
+                }
             }
-        }
-        $secret = env('PAYMOB_HMAC');
-        $hased = hash_hmac('sha512', $connectedString, $secret);
+            $secret = env('PAYMOB_HMAC');
+            $hased = hash_hmac('sha512', $connectedString, $secret);
 
-        $db_order = Order::where('id', $request['merchant_order_id'])->first();
-        
-        if ($hased == $hmac) {
-            $db_order->update(['order_status_id' => 2]); // status 'Preparing'    
-            $db_order->payment->update(['description' => 'Order Payed', 'status' => 'Paid']);
+            $db_order = Order::where('id', $request['merchant_order_id'])->first();
+
+            if ($hased == $hmac) {
+                $db_order->update(['order_status_id' => 2]); // status 'Preparing'    
+                $db_order->payment->update(['description' => 'Order Payed', 'status' => 'Paid']);
+                // delete user cart and cart options
+                Cart::where('user_id', $db_order->user_id)->delete();
+
+                return redirect("/order/confirm")->with('market', $db_order->productOrders[0]->product->market)->with('order', $db_order);
+                exit;
+            }
+            $db_order->update(['order_status_id' => 7]); // status 'Canceled'
+            Payment::where('id', $db_order->payment_id)->update(['description' => 'Order not Payed', 'status' => 'Not paid']);
             // delete user cart and cart options
             Cart::where('user_id', $db_order->user_id)->delete();
 
-            return redirect("/order/confirm")->with('market', $db_order->productOrders[0]->product->market)->with('order', $db_order);
+            return redirect("/order/not-confirm")->with('message', "Order Not confirmed");
             exit;
         }
-        $db_order->update(['order_status_id' => 7]); // status 'Canceled'
-        Payment::where('id', $db_order->payment_id)->update(['description' => 'Order not Payed', 'status' => 'Not paid']);
-        // delete user cart and cart options
-        Cart::where('user_id', $db_order->user_id)->delete();
-        
+
         return redirect("/order/not-confirm")->with('message', "Order Not confirmed");
         exit;
     }

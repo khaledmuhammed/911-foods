@@ -366,6 +366,8 @@
                         }
                         total=total- dis * parseInt(product.numberOfMeals);
                     })
+
+                    // remove the del mark on price if the total price 
                     const old=`<p class="line-through ...">${document.getElementById("total").textContent}</p>`;
                     document.getElementById("total").innerHTML=`${old}  ${showPrice(total+(total*tax)/100)}` 
                 }

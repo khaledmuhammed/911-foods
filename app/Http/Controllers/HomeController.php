@@ -2,11 +2,15 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Category;
 use App\Models\Field;
 use App\Models\Market;
 use App\Models\Product;
+use App\Models\Category;
+use App\Mail\ContactMail;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Facades\Session;
+use Illuminate\Support\Facades\Redirect;
 
 class HomeController extends Controller
 {
@@ -78,8 +82,11 @@ class HomeController extends Controller
             'phone' => $request->phone,
             'message' => $request->message,
         ];
-        dd($data);
+        // dd($data);
+        Mail::to('km470951@gmail.com')->send(new ContactMail($data));
         
-        // return response()->json(["products" => $products]);
+        Session::flash('message', 'We received your message and we will reply to you as soon as possible, Thank you.');
+        Session::flash('alert-class', 'alert-success');
+        return Redirect::back();
     }
 }

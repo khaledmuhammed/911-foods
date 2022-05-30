@@ -221,7 +221,8 @@ class OrderController extends Controller
 
             if (setting('enable_notifications', false)) {
                 if (isset($input['order_status_id']) && $input['order_status_id'] != $oldOrder->order_status_id) {
-                    Notification::send([$order->user], new StatusChangedOrder($order));
+                    // Notification::send([$order->user], new StatusChangedOrder($order));
+                    Notification::send($order->productOrders[0]->product->market->users, new StatusChangedOrder($order));
                 }
 
                 if (isset($input['driver_id']) && ($input['driver_id'] != $oldOrder['driver_id'])) {

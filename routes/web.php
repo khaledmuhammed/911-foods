@@ -22,6 +22,9 @@ Route::get('/category/{category:id}', [CategoryController::class, 'index']);
 Route::get('/fields/{field:id}', [FieldsController::class, 'index']);
 Route::get('/products', [ProductController::class, 'index']);
 
+Route::get('/top-products', [ProductController::class, 'top_products'])->name('top_products');
+
+
 Route::prefix('/markets')->group(function () {
     Route::view('/', 'markets.listing');
     Route::get('/{market:id}', [MarketController::class, 'show']);
