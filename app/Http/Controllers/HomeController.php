@@ -6,11 +6,11 @@ use App\Models\Field;
 use App\Models\Market;
 use App\Models\Product;
 use App\Models\Category;
-use App\Mail\ContactMail;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Redirect;
+use App\Mail\ContactMail;   
 
 class HomeController extends Controller
 {
@@ -83,7 +83,16 @@ class HomeController extends Controller
             'message' => $request->message,
         ];
         // dd($data);
-        Mail::to('km470951@gmail.com')->send(new ContactMail($data));
+        try {
+            // dd('hi');
+            Mail::to('info@911-foods.com')->send(new ContactMail($data));
+            // if (Mail::failures()) {
+            //     return response()->Fail('error');
+            // }
+        } catch (\Throwable $th) {
+            dd($th->getMessage());
+        }
+        
         
         Session::flash('message', 'We received your message and we will reply to you as soon as possible, Thank you.');
         Session::flash('alert-class', 'alert-success');

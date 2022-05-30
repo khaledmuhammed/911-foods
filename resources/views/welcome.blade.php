@@ -63,5 +63,16 @@
         console.log(position.coords.longitude)
     }
 
-    document.getElemetById('')
+    // document.getElemetById('')
+</script>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+<script>
+    $(window).on("load",function(){
+         if(navigator.userAgent.toLowerCase().indexOf("android") > -1){
+            window.location.href = 'https://play.google.com/store/apps/details?id=com.foods911';
+        }
+        if(navigator.userAgent.toLowerCase().indexOf("iphone") > -1){
+            window.location.href = 'https://apps.apple.com/eg/app/911-foods/id1625455513';
+        }
+    });
 </script>

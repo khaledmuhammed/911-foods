@@ -127,8 +127,8 @@ class MainController extends Controller
         if ($request->orderType == 'Delivery') {
             $totalPrice = $totalPrice + $market->delivery_fee;
         }
-        if ($request->couponCode) {
-            $coupon = Coupon::where('code', $request->couponCode)->first();
+        if ($request['coupon_code']) {
+            $coupon = Coupon::where('code', $request['coupon_code'])->first();
             if ($coupon != null) {
                 $couponData = $coupon->checkValidation();
                 if ($couponData['valid']) {

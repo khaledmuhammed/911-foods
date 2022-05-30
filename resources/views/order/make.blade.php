@@ -228,6 +228,9 @@
                             <div class="flex flex-row justify-between my-2 text-red-600 text-xl font-semibold">
                                 <div class="">{{__('Total')}}</div>
                                 <div id="total"></div>
+                            </div>
+                            <div class="flex flex-row justify-between my-2 text-red-600 text-xl font-semibold">
+                                <div id="warning_message"></div>
                             </div>    
                             {{-- coupon --}}
                             <div class="input-group input-group my-2">
@@ -368,9 +371,19 @@
                     })
 
                     // remove the del mark on price if the total price 
-                    const old=`<p class="line-through ...">${document.getElementById("total").textContent}</p>`;
-                    document.getElementById("total").innerHTML=`${old}  ${showPrice(total+(total*tax)/100)}` 
-                }
+                    old_price = document.getElementById("total").textContent
+                    new_price = showPrice(total+(total*tax)/100)
+                    // alert(old_price + 'ooooooooooooooooooo' + new_price)
+                    // alert(total)
+                    if(old_price != new_price){
+                         const old=`<p class="line-through ...">${document.getElementById("total").textContent}</p>`;
+                        document.getElementById("total").innerHTML=`${old}  ${showPrice(total+(total*tax)/100)}`
+                    }else{
+                        const old=`<h6 class="alert alert-danger ">This Coupon not Valid on this Product</h6>`;
+                        document.getElementById("total").innerHTML=`${old_price}` 
+                        document.getElementById("warning_message").innerHTML=`${old}`
+                    }
+                    }
                 const setNewAddress=()=>{
                     document.getElementById("address").innerHTML=
                     `

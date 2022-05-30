@@ -65,7 +65,7 @@ class OrderController extends Controller
             }
             return redirect("/order/not-confirm")->with('message', "Order Not confirmed");
         } catch (\Throwable $th) {
-            // dd($th->getMessage());
+            dd($th->getMessage());
             return redirect('/order/not-confirm')->with('message', "Order Not confirmed");
         }
     }
@@ -110,6 +110,7 @@ class OrderController extends Controller
             // if ($distanceMarket->distance > 3)
             //     return view('order.not_confirm');
             // dd($distanceMarket->distance ."***********************". $market->delivery_range);
+            // if ($distanceMarket->distance > $market->delivery_range){
             if ($distanceMarket->distance > $market->delivery_range){
                 return view('order.not_confirm');
             }
@@ -240,8 +241,11 @@ class OrderController extends Controller
             }
         }
 
-        // test
-        // Notification::send($order->productOrders[0]->product->market->users, new NewOrder($order));
+        // try {
+        //     Notification::send($order->productOrders[0]->product->market->users, new NewOrder($order));
+        // } catch (\Throwable $th) {
+        //     dd($th->getMessage());
+        // }
 
         return [$market, $order];
     }

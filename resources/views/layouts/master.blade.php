@@ -13,6 +13,7 @@
                 --main_color:{{setting('main_color')}};
             }
         </style>
+        
         {{-- fonts --}}
         <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
         {{-- title of the site --}}
