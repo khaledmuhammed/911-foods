@@ -11,7 +11,7 @@ namespace App\Listeners;
 
 use App\Criteria\Earnings\EarningOfMarketCriteria;
 use App\Repositories\EarningRepository;
-
+use Log;
 class UpdateOrderEarningTable
 {
     /**
@@ -54,7 +54,8 @@ class UpdateOrderEarningTable
                     $market->total_orders++;
                     $market->total_earning += $amount;
                     $market->admin_earning += ($market->market->admin_commission / 100) * $amount;
-                    $market->market_earning += ($amount - $market->admin_earning);
+                    $market->vaild_earning += $amount - (($market->market->admin_commission / 100) * $amount);
+                    $market->market_earning += $amount - (($market->market->admin_commission / 100) * $amount);
                     $market->delivery_fee += $event->updatedOrder->delivery_fee;
                     $market->tax += $amount * $event->updatedOrder->tax / 100;
                     $market->save();
@@ -62,7 +63,8 @@ class UpdateOrderEarningTable
                     $market->total_orders--;
                     $market->total_earning -= $amount;
                     $market->admin_earning -= ($market->market->admin_commission / 100) * $amount;
-                    $market->market_earning -= $amount - (($market->market->admin_commission / 100) * $amount);
+                    $market->vaild_earning -=   $amount == 0 ? 0 :  ($amount - (($market->market->admin_commission / 100) * $amount));
+                    $market->market_earning -= $amount == 0 ? 0 : ($amount - (($market->market->admin_commission / 100) * $amount));
                     $market->delivery_fee -= $event->updatedOrder->delivery_fee;
                     $market->tax -= $amount * $event->updatedOrder->tax / 100;
                     $market->save();

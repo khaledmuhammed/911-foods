@@ -3,23 +3,24 @@
 namespace App\Http\Controllers;
 
 use App\Models\Cart;
-use App\Models\CartOption;
+use App\Models\Order;
 use App\Models\Coupon;
-use App\Models\CustomFieldValue;
-use App\Models\DeliveryAddresse;
 use App\Models\Market;
 use App\Models\Option;
-use App\Models\Order;
 use App\Models\Payment;
 use App\Models\Product;
+use App\Models\CartOption;
 use App\Models\productOrder;
+use Illuminate\Http\Request;
+use App\Notifications\NewOrder;
+use App\Models\CustomFieldValue;
+use App\Models\DeliveryAddresse;
 use App\Models\ProductOrderExtra;
 use App\Models\ProductOrderOption;
-use App\Notifications\NewOrder;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Notification;
 use Illuminate\Support\Facades\Http;
+use Illuminate\Support\Facades\Session;
+use Illuminate\Support\Facades\Notification;
 
 class OrderController extends Controller
 {
@@ -246,6 +247,9 @@ class OrderController extends Controller
         // } catch (\Throwable $th) {
         //     dd($th->getMessage());
         // }
+
+        // add checked session to prevent go back and resubmit the order
+        Session::put("checked", true);
 
         return [$market, $order];
     }
