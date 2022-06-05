@@ -33,8 +33,9 @@ class MarketsPayoutDataTable extends DataTable
             ->editColumn('amount', function ($markets_payout) {
                 return getPriceColumn($markets_payout, 'amount');
             })
-            //->addColumn('action', 'markets_payouts.datatables_actions')
-            ->rawColumns(array_merge($columns));
+            ->addColumn('action', 'markets_payouts.datatables_actions')
+            ->rawColumns(array_merge($columns, ['action']));
+            // ->rawColumns(array_merge($columns));
 
         return $dataTable;
     }
@@ -102,11 +103,11 @@ class MarketsPayoutDataTable extends DataTable
      */
     public function query(MarketsPayout $model)
     {
-        if(auth()->user()->hasRole('admin')){
+        if (auth()->user()->hasRole('admin')) {
             return $model->newQuery()->with("market")->select('markets_payouts.*');
-        }elseif (auth()->user()->hasRole('manager')){
-            return $model->newQuery()->with("market")->join('user_markets','user_markets.market_id','=','markets_payouts.market_id')
-                ->where('user_markets.user_id',auth()->id())->select('markets_payouts.*');
+        } elseif (auth()->user()->hasRole('manager')) {
+            return $model->newQuery()->with("market")->join('user_markets', 'user_markets.market_id', '=', 'markets_payouts.market_id')
+                ->where('user_markets.user_id', auth()->id())->select('markets_payouts.*');
         }
     }
 
@@ -120,12 +121,16 @@ class MarketsPayoutDataTable extends DataTable
         return $this->builder()
             ->columns($this->getColumns())
             ->minifiedAjax()
-            //->addAction(['width' => '80px', 'printable' => false, 'responsivePriority' => '100'])
+            ->addAction(['width' => '80px', 'printable' => false, 'responsivePriority' => '100'])
             ->parameters(array_merge(
-                config('datatables-buttons.parameters'), [
+                config('datatables-buttons.parameters'),
+                [
                     'language' => json_decode(
-                        file_get_contents(base_path('resources/lang/' . app()->getLocale() . '/datatable.json')
-                        ), true)
+                        file_get_contents(
+                            base_path('resources/lang/' . app()->getLocale() . '/datatable.json')
+                        ),
+                        true
+                    )
                 ]
             ));
     }

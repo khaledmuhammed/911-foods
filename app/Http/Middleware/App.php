@@ -16,6 +16,12 @@ class App
      */
     public function handle($request, Closure $next)
     {
+        // dd($request);
+        // $order_permission = $request->route()->uri;
+        // if($order_permission == 'order'){
+
+        // }
+        // dd($permission);
         try {
             // dd(setting('app_logo', '') );
             $upload = Upload::where('uuid', setting('app_logo', ''))->first();

@@ -19,7 +19,7 @@
         @include('balde_components.navs.side-bar')                       
         @include('balde_components.navs.nav-bar-v2')
         <main class="w-full mt-16  relative  " >
-            <form method="post" action="{{route("order")}}" class="container flex flex-col lg:flex-row py-10">
+            <form name="form_sub" method="post" action="{{route("order")}}" class="container flex flex-col lg:flex-row py-10">
                 @csrf
                 {{-- form inputs --}}
                 <div class="flex-1  lg:mr-5">
@@ -245,7 +245,7 @@
                                 <input type="hidden" name="order" id="order">
                                 <input type="hidden" name="payment_method" id="payment_method">
                                 <input type="hidden" name="orderType" id="orderTypeInput">
-                                <button type="submit" class="form-control mb-3 p-2 border-none bg-green text-white font-semibold rounded">{{__('Make your Order')}}</button>
+                                <button name="register_sub" type="submit" class="form-control mb-3 p-2 border-none bg-green text-white font-semibold rounded">{{__('Make your Order')}}</button>
                                 <p class="text-center text-gray-600 text-sm font-light">{{__('Or Call Us at')}}<b class="font-semibold" > {{$market->mobile}}</b></p>
                             </div>
                         </div>
@@ -490,5 +490,10 @@
                 getCurrencyRight();
                 wait();
                 
+        </script>
+        <script>
+            $(document).ready(function () { $('.form_sub').submit(function (validator) { $('.register_sub').attr('disabled', 'disabled');    });
+});
+
         </script>
     @endsection

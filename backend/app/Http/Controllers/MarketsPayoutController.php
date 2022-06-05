@@ -2,20 +2,24 @@
 
 namespace App\Http\Controllers;
 
-use App\Criteria\Earnings\EarningOfMarketCriteria;
-use App\Criteria\Markets\MarketsOfManagerCriteria;
+use Flash;
+use Carbon\Carbon;
+use App\Models\Order;
+use App\Models\Market;
+use App\Models\ProductOrder;
+use Illuminate\Http\Request;
+use App\Models\MarketsPayout;
+use Illuminate\Support\Facades\Log;
+use App\Repositories\MarketRepository;
+use App\Repositories\EarningRepository;
+use Illuminate\Support\Facades\Response;
 use App\DataTables\MarketsPayoutDataTable;
+use App\Repositories\CustomFieldRepository;
+use App\Repositories\MarketsPayoutRepository;
 use App\Http\Requests\CreateMarketsPayoutRequest;
 use App\Http\Requests\UpdateMarketsPayoutRequest;
-use App\Repositories\CustomFieldRepository;
-use App\Repositories\EarningRepository;
-use App\Repositories\MarketRepository;
-use App\Repositories\MarketsPayoutRepository;
-use Carbon\Carbon;
-use Flash;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Log;
-use Illuminate\Support\Facades\Response;
+use App\Criteria\Earnings\EarningOfMarketCriteria;
+use App\Criteria\Markets\MarketsOfManagerCriteria;
 use Prettus\Validator\Exceptions\ValidatorException;
 
 class MarketsPayoutController extends Controller
@@ -64,6 +68,7 @@ class MarketsPayoutController extends Controller
      */
     public function create()
     {
+
         if(auth()->user()->hasRole('manager')){
             $this->marketRepository->pushCriteria(new MarketsOfManagerCriteria(auth()->id()));
         }
@@ -95,7 +100,19 @@ class MarketsPayoutController extends Controller
         $input['paid_date'] = Carbon::now();
         $customFields = $this->customFieldRepository->findByField('custom_field_model', $this->marketsPayoutRepository->model());
         try {
-            $this->earningRepository->update(['market_earning'=>$earning->market_earning - $input['amount']], $earning->id);
+            $this->earningRepository->update([
+                'total_earning'=> $earning->total_earning - $input['amount'] ,
+                'market_earning' => ($earning->market_earning - $input['amount']),
+                'vaild_earning' => ($earning->vaild_earning - $input['amount']),
+                'admin_earning' => 0,
+                'tax' => 0,
+                'delivery_fee' => 0
+            ], $earning->id);
+            // $this->earningRepository->update(['market_earning'=>$earning->market_earning - $input['amount']], $earning->id);
+            // $this->earningRepository->update(['vaild_earning'=>$earning->market_earning - $input['amount']], $earning->id);
+            // $this->earningRepository->update(['admin_earning'=> 0], $earning->id);
+            // $this->earningRepository->update(['delivery_fee'=> 0], $earning->id);
+            // $this->earningRepository->update(['tax'=> 0], $earning->id);
             $marketsPayout = $this->marketsPayoutRepository->create($input);
             $marketsPayout->customFieldsValues()->createMany(getCustomFieldsValues($customFields, $request));
 
@@ -125,7 +142,72 @@ class MarketsPayoutController extends Controller
             return redirect(route('marketsPayouts.index'));
         }
 
+        
         return view('markets_payouts.show')->with('marketsPayout', $marketsPayout);
+    }
+    /**
+     * Display the specified MarketsPayout.
+     *
+     * @param int $id
+     *
+     * @return Response
+     */
+    public function view($id)
+    {
+        // $id is for payout id
+        $marketsPayout = $this->marketsPayoutRepository->findWithoutFail($id);
+        
+        if (empty($marketsPayout)) {
+            Flash::error('Markets Payout not found');
+
+            return redirect(route('marketsPayouts.index'));
+        }
+
+
+
+        // get orders related to the payout date
+        $market_id = $marketsPayout['market_id'];
+        $end_date =  $marketsPayout['paid_date']->toDateTimeString();
+        $start_date = null;
+        $last_payout = MarketsPayout::where('market_id', $market_id)->where('paid_date', '>', $end_date)->first();
+        if($last_payout){
+            $start_date = $last_payout['paid_date']->toDateTimeString();
+        }
+        $market = Market::where('id', $marketsPayout['market_id'])->get()[0];
+        $orders = [];
+        foreach ($market->products as $product) {
+            $ProductOrders = ProductOrder::where('product_id', $product->id)->with('order')->get();
+            foreach ($ProductOrders as $ProductOrder) {
+                $order_date = $ProductOrder->order->updated_at->toDateTimeString();
+                // dd($end_date.'||||||||||||||'. $order_date.'||||||||'. $start_date);
+                if($start_date == null){
+                    // dd($start_date);
+                    if($end_date > $order_date){
+                        $ProductOrder->order['delivery_fee'] = $market['delivery_fee'];
+                        $ProductOrder->order['sub_total'] = $ProductOrder['quantity'] * $ProductOrder['price'];
+                        $ProductOrder->order['tax'] = $market['admin_commission'];
+                        $ProductOrder->order['tax'] = $ProductOrder->order['sub_total'] * $ProductOrder->order['tax'] / 100;
+                        $ProductOrder->order['total'] = $ProductOrder->order['sub_total'] + $ProductOrder->order['tax'] + $ProductOrder->order['delivery_fee'];
+                        array_push($orders, $ProductOrder->order);
+                    }
+                }
+                if($start_date > $order_date && $end_date < $order_date  ){
+                    $ProductOrder->order['delivery_fee'] = $market['delivery_fee'];
+                    $ProductOrder->order['sub_total'] = $ProductOrder['quantity'] * $ProductOrder['price'];
+                    $ProductOrder->order['tax'] = $market['admin_commission'];
+                    $ProductOrder->order['tax'] = $ProductOrder->order['sub_total'] * $ProductOrder->order['tax'] / 100;
+                    $ProductOrder->order['total'] = $ProductOrder->order['sub_total'] + $ProductOrder->order['tax'] + $ProductOrder->order['delivery_fee'];
+                    array_push($orders, $ProductOrder->order);
+                }
+            }
+        }
+        // dd($orders);
+     
+        return view('markets_payouts.show')->with([
+            'marketsPayout' => $marketsPayout,
+            'orders' => $orders
+        ]);
+
     }
 
     /**

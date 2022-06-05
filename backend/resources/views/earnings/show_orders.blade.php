@@ -6,15 +6,15 @@
         <div class="container-fluid">
             <div class="row mb-2">
                 <div class="col-sm-6">
-                    <h1 class="m-0 text-dark">{{ trans('lang.markets_payout_plural') }}<small
-                            class="ml-3 mr-3">|</small><small>{{ trans('lang.markets_payout_desc') }}</small></h1>
+                    <h1 class="m-0 text-dark">{{ trans('lang.earning_plural') }}<small
+                            class="ml-3 mr-3">|</small><small>{{ trans('lang.earning_desc') }}</small></h1>
                 </div><!-- /.col -->
                 <div class="col-sm-6">
                     <ol class="breadcrumb float-sm-right">
                         <li class="breadcrumb-item"><a href="{{ url('/') }}"><i class="fa fa-dashboard"></i>
                                 {{ trans('lang.dashboard') }}</a></li>
                         <li class="breadcrumb-itema ctive"><a
-                                href="{!! route('marketsPayouts.index') !!}">{{ trans('lang.markets_payout_plural') }}</a>
+                                href="{!! route('earnings.index') !!}">{{ trans('lang.earning_plural') }}</a>
                         </li>
                     </ol>
                 </div><!-- /.col -->
@@ -27,12 +27,12 @@
             <div class="card-header">
                 <ul class="nav nav-tabs align-items-end card-header-tabs w-100">
                     <li class="nav-item">
-                        <a class="nav-link" href="{!! route('marketsPayouts.index') !!}"><i
-                                class="fa fa-list mr-2"></i>{{ trans('lang.markets_payout_table') }}</a>
+                        <a class="nav-link" href="{!! route('earnings.index') !!}"><i
+                                class="fa fa-list mr-2"></i>{{ trans('lang.earning_table') }}</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link active" href="{!! route('marketsPayouts.create') !!}"><i
-                                class="fa fa-plus mr-2"></i>{{ trans('lang.markets_payout_create') }}</a>
+                        <a class="nav-link active" href="{!! route('earnings.create') !!}"><i
+                                class="fa fa-plus mr-2"></i>{{ trans('lang.earning_create') }}</a>
                     </li>
                 </ul>
                 {{-- print --}}
@@ -43,10 +43,10 @@
                 </li>
                 {{-- </div> --}}
             </div>
+
             <div class="card-body">
                 <div class="row">
-                    @include('markets_payouts.show_fields')
-
+                    @include('earnings.show_fields')
                     <h3 class="m-0 text-dark">Orders</h3>
                     {{-- orders table --}}
                     <table class="table">
@@ -61,7 +61,6 @@
                                 <th scope="col">Payment Status</th>
                                 <th scope="col">Sub Total</th>
                                 <th scope="col">Total</th>
-                                <th scope="col">Updated at</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -76,14 +75,13 @@
                                     <td><span class="badge badge-success">{{ $order->payment->status }}</span></td>
                                     <td>{{ $order['sub_total'] }}</td>
                                     <td>{{ $order['total'] }}</td>
-                                    <td>{{ $order['updated_at'] }}</td>
                                 </tr>
                             @endforeach
                         </tbody>
                     </table>
                     <!-- Back Field -->
                     <div class="form-group col-12 text-right">
-                        <a href="{!! route('marketsPayouts.index') !!}" class="btn btn-default"><i class="fa fa-undo"></i>
+                        <a href="{!! route('earnings.index') !!}" class="btn btn-default"><i class="fa fa-undo"></i>
                             {{ trans('lang.back') }}</a>
                     </div>
                 </div>

@@ -158,6 +158,8 @@ Route::middleware('auth')->group(function () {
     Route::resource('earnings', 'EarningController')->except([
         'show','edit','update'
     ]);
+    Route::get('/earnings/market/{market_id}', 'EarningController@view')->name('market_earning.orders');
+
 
     Route::resource('driversPayouts', 'DriversPayoutController')->except([
         'show','edit','update'
@@ -166,6 +168,7 @@ Route::middleware('auth')->group(function () {
     Route::resource('marketsPayouts', 'MarketsPayoutController')->except([
         'show','edit','update'
     ]);
+    Route::get('/marketsPayouts/market/{market_id}', 'MarketsPayoutController@view')->name('marketsPayouts.view');
 
     Route::resource('optionGroups', 'OptionGroupController')->except([
         'show'

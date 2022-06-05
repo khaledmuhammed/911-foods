@@ -40,6 +40,10 @@ class Permissions
     public function handle($request, Closure $next)
     {
         $permission = $request->route()->getName();
+        
+        if($permission == 'market_earning.orders' || $permission == 'marketsPayouts.view'){
+            return $next($request);
+        }
         if ($this->match($request->route()) && auth()->user()->canNot($permission)) {
             if ($permission == 'dashboard') {
                 return redirect(route('users.profile'));

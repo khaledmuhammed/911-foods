@@ -9,27 +9,28 @@
 
 namespace App\Http\Controllers;
 
-use App\Criteria\Markets\MarketsOfUserCriteria;
-use App\Criteria\Users\AdminsCriteria;
-use App\Criteria\Users\ClientsCriteria;
-use App\Criteria\Users\DriversCriteria;
-use App\Criteria\Users\ManagersClientsCriteria;
-use App\Criteria\Users\ManagersCriteria;
-use App\Criteria\Users\VendorsCriteria;
-use App\DataTables\MarketDataTable;
-use App\DataTables\RequestedMarketDataTable;
+use Laracasts\Flash\Flash;
+use Illuminate\Http\Request;
 use App\Events\MarketChangedEvent;
-use App\Http\Requests\CreateMarketRequest;
-use App\Http\Requests\UpdateMarketRequest;
-use App\Repositories\CustomFieldRepository;
+use App\DataTables\MarketDataTable;
+use Illuminate\Support\Facades\Log;
+use App\Repositories\UserRepository;
 use App\Repositories\FieldRepository;
+use App\Criteria\Users\AdminsCriteria;
 use App\Repositories\MarketRepository;
 use App\Repositories\UploadRepository;
-use App\Repositories\UserRepository;
-use Flash;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Log;
+use App\Criteria\Users\ClientsCriteria;
+use App\Criteria\Users\DriversCriteria;
+use App\Criteria\Users\VendorsCriteria;
+use App\Criteria\Users\ManagersCriteria;
 use Illuminate\Support\Facades\Response;
+use App\Http\Requests\CreateMarketRequest;
+use App\Http\Requests\UpdateMarketRequest;
+// use Flash;
+use App\Repositories\CustomFieldRepository;
+use App\DataTables\RequestedMarketDataTable;
+use App\Criteria\Markets\MarketsOfUserCriteria;
+use App\Criteria\Users\ManagersClientsCriteria;
 use Prettus\Validator\Exceptions\ValidatorException;
 
 class MarketController extends Controller
@@ -151,6 +152,7 @@ class MarketController extends Controller
      */
     public function show($id)
     {
+        dd('hi');
         $this->marketRepository->pushCriteria(new MarketsOfUserCriteria(auth()->id()));
         $market = $this->marketRepository->findWithoutFail($id);
 

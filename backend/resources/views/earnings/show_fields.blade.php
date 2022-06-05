@@ -39,10 +39,17 @@
 </div>
 
 <!-- Market Earning Field -->
-<div class="form-group row col-6">
+{{-- <div class="form-group row col-6">
   {!! Form::label('market_earning', 'Market Earning:', ['class' => 'col-3 control-label text-right']) !!}
   <div class="col-9">
     <p>{!! $earning->market_earning !!}</p>
+  </div>
+</div> --}}
+<!-- Valid Earning Field -->
+<div class="form-group row col-6">
+  {!! Form::label('market_earning', 'Valid Earning:', ['class' => 'col-3 control-label text-right']) !!}
+  <div class="col-9">
+    <p>{!! $earning->vaild_earning !!}</p>
   </div>
 </div>
 

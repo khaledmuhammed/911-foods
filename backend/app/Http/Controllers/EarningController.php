@@ -2,17 +2,22 @@
 
 namespace App\Http\Controllers;
 
-use App\DataTables\EarningDataTable;
-use App\Http\Requests\CreateEarningRequest;
-use App\Http\Requests\UpdateEarningRequest;
-use App\Repositories\CustomFieldRepository;
-use App\Repositories\EarningRepository;
-use App\Repositories\OrderRepository;
-use App\Repositories\MarketRepository;
 use Flash;
+use App\Models\Order;
+use App\Models\Market;
+use App\Models\Earning;
+use App\Models\Product;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
+use App\DataTables\EarningDataTable;
+use App\Repositories\OrderRepository;
+use App\Repositories\MarketRepository;
+use App\Repositories\EarningRepository;
 use Illuminate\Support\Facades\Response;
+use App\Http\Requests\CreateEarningRequest;
+use App\Http\Requests\UpdateEarningRequest;
+use App\Models\ProductOrder;
+use App\Repositories\CustomFieldRepository;
 use Prettus\Validator\Exceptions\ValidatorException;
 
 class EarningController extends Controller
@@ -112,6 +117,46 @@ private $marketRepository;
         }
 
         return view('earnings.show')->with('earning', $earning);
+    }
+
+    /**
+     * Display the specified Earning Orders and all realted values to this market.
+     *
+     * @param  int $id
+     *
+     * @return Response
+     */
+    public function view($earning_id)
+    {
+        $earning = Earning::where('id', $earning_id)->first();
+        if (empty($earning)) {
+            Flash::error('Market not found');
+
+            return redirect(route('earnings.index'));
+        }
+        $market = Market::where('id', $earning['market_id'])->get()[0];
+
+        if (empty($market)) {
+            Flash::error('Market not found');
+
+            return redirect(route('earnings.index'));
+        }
+
+        $orders = [];
+        foreach ($market->products as $product ) {
+            $ProductOrders = ProductOrder::where('product_id', $product->id)->with('order')->get();
+            foreach ($ProductOrders as $ProductOrder) {
+                $ProductOrder->order['delivery_fee'] = $market['delivery_fee'];
+                $ProductOrder->order['sub_total'] = $ProductOrder['quantity'] * $ProductOrder['price'];
+                $ProductOrder->order['tax'] = $market['admin_commission'];
+                $ProductOrder->order['tax'] = $ProductOrder->order['sub_total'] * $ProductOrder->order['tax'] / 100;
+                $ProductOrder->order['total'] = $ProductOrder->order['sub_total'] + $ProductOrder->order['tax'] + $ProductOrder->order['delivery_fee'];
+                array_push($orders, $ProductOrder->order);
+            }
+        }
+        return view('earnings.show_orders')->with(['earning' => $earning,
+                                                    'market' => $market,
+                                                    'orders' => $orders]);
     }
 
     /**

@@ -36,14 +36,18 @@ class MainController extends Controller
 
     public function search(Request $request)
     {
-        // dd('hi');
+        // $search = Market::where('name', 'like', '%' . $request->search . '%')->get();
+        // dd($search);
+        if(empty($request->search)){
+            return response('Search not Working!', 404)->header('Content-Type', 'text/plain');
+        }
         return response()->json([
-            "markets" => Market::where('name', 'like', '%' . $request->search . '%')
-                ->take(10)
+            "data" => Market::where('name', 'like', '%' . $request->search . '%')
                 ->get()
                 ->map
                 ->format()
         ]);
+
     }
 
     public function paymob_checkout(Request $request)

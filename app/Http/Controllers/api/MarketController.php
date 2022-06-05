@@ -115,6 +115,7 @@ class MarketController extends Controller
                 "published" => $review->created_at->diffForHumans(),
             ]);
         }
+        
         return response()->json([
             "market" => $market,
             "market_rate" => $market->rate,

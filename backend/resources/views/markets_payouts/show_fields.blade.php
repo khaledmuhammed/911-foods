@@ -56,7 +56,7 @@
 
 <!-- Updated At Field -->
 <div class="form-group row col-6">
-  {!! Form::label('updated_at', 'Updated At:', ['class' => 'col-3 control-label text-right']) !!}
+  {!! Form::label('action', 'Updated At:', ['class' => 'col-3 control-label text-right']) !!}
   <div class="col-9">
     <p>{!! $marketsPayout->updated_at !!}</p>
   </div>

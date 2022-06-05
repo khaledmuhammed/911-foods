@@ -13,7 +13,7 @@ class MarketController extends Controller
             [
                 'market' => $market,
                 'market_cover' => $market->getFirstMediaUrl('image'),
-                'market_fields' => $market->fields->first() ? $market->fields->first()->name : null,
+                'market_fields' => $market->fields()->first() ? $market->fields()->first()->name : null,
                 'market_rate' => $market->getRateAttribute(),
             ]
         );
