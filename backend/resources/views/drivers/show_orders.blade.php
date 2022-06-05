@@ -6,15 +6,15 @@
         <div class="container-fluid">
             <div class="row mb-2">
                 <div class="col-sm-6">
-                    <h1 class="m-0 text-dark">{{ trans('lang.earning_plural') }}<small
-                            class="ml-3 mr-3">|</small><small>{{ trans('lang.earning_desc') }}</small></h1>
+                    <h1 class="m-0 text-dark">{{ trans('lang.driver_plural') }}<small
+                            class="ml-3 mr-3">|</small><small>{{ trans('lang.driver_desc') }}</small></h1>
                 </div><!-- /.col -->
                 <div class="col-sm-6">
                     <ol class="breadcrumb float-sm-right">
                         <li class="breadcrumb-item"><a href="{{ url('/') }}"><i class="fa fa-dashboard"></i>
                                 {{ trans('lang.dashboard') }}</a></li>
                         <li class="breadcrumb-itema ctive"><a
-                                href="{!! route('earnings.index') !!}">{{ trans('lang.earning_plural') }}</a>
+                                href="{!! route('drivers.index') !!}">{{ trans('lang.driver_plural') }}</a>
                         </li>
                     </ol>
                 </div><!-- /.col -->
@@ -27,26 +27,54 @@
             <div class="card-header">
                 <ul class="nav nav-tabs align-items-end card-header-tabs w-100">
                     <li class="nav-item">
-                        <a class="nav-link" href="{!! route('earnings.index') !!}"><i
-                                class="fa fa-list mr-2"></i>{{ trans('lang.earning_table') }}</a>
+                        <a class="nav-link" href="{!! route('drivers.index') !!}"><i
+                                class="fa fa-list mr-2"></i>{{ trans('lang.driver_table') }}</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link active" href="{!! route('earnings.create') !!}"><i
-                                class="fa fa-plus mr-2"></i>{{ trans('lang.earning_create') }}</a>
+                        <a class="nav-link active" href="{!! route('drivers.create') !!}"><i
+                                class="fa fa-plus mr-2"></i>{{ trans('lang.driver_create') }}</a>
                     </li>
                 </ul>
-                {{-- print --}}
-                {{-- <div class="ml-auto d-inline-flex "> --}}
-                <li class="nav-item pull-right" style="list-style-type: none;">
-                    <a class="nav-link pt-1" id="printOrder" href="#"><i class="fa fa-print"></i>
-                        {{ trans('lang.print') }}</a>
-                </li>
-                {{-- </div> --}}
             </div>
+
+            {{-- start driver info --}}
+            <div class="row">
+                <div class="col-lg-3 col-6">
+                    <!-- small box -->
+                    <div class="small-box bg-info">
+                        <div class="inner">
+                            <h3>{{ $driver->total_orders }}</h3>
+
+                            <p>Total Orders</p>
+                        </div>
+                        <div class="icon">
+                            <i class="fa fa-shopping-bag"></i>
+                        </div>
+
+                    </div>
+                </div>
+                <div class="col-lg-3 col-6">
+                    <!-- small box -->
+                    <div class="small-box bg-success">
+                        <div class="inner">
+                            <h3>{{ $driver['total_cash'] }}</h3>
+
+                            <p>Total Cash</p>
+                        </div>
+                        <div class="icon">
+                            <i class="fa fa-cutlery"></i>
+                        </div>
+
+                    </div>
+                </div>
+
+
+            </div>
+            {{-- end driver info --}}
 
             <div class="card-body">
                 <div class="row">
-                    @include('earnings.show_fields')
+                    {{-- @include('drivers.show_fields') --}}
                     <h3 class="m-0 text-dark">Orders</h3>
                     {{-- orders table --}}
                     <table class="table">
@@ -74,8 +102,8 @@
                                     <td>{{ $order['delivery_fee'] }}</td>
                                     <td>{{ $order['tax'] }}</td>
                                     <td><span class="badge badge-success">{{ $order->payment->status }}</span></td>
-                                    <td>{{ $order['sub_total'] }}</td>
-                                    <td>{{ $order['total'] }}</td>
+                                    <td>{{ $order->productOrders[0]['quantity'] *  $order->productOrders[0]['price']}}</td>
+                                    <td>{{ ($order->productOrders[0]['quantity'] *  $order->productOrders[0]['price']) + $order['delivery_fee'] + $order['tax']}}</td>
                                     <td>{{ $order['updated_at'] }}</td>
                                 </tr>
                             @endforeach
@@ -83,19 +111,13 @@
                     </table>
                     <!-- Back Field -->
                     <div class="form-group col-12 text-right">
-                        <a href="{!! route('earnings.index') !!}" class="btn btn-default"><i class="fa fa-undo"></i>
+                        <a href="{!! route('drivers.index') !!}" class="btn btn-default"><i class="fa fa-undo"></i>
                             {{ trans('lang.back') }}</a>
                     </div>
+
                 </div>
                 <div class="clearfix"></div>
             </div>
         </div>
     </div>
 @endsection
-@push('scripts')
-  <script type="text/javascript">
-    $("#printOrder").on("click",function () {
-      window.print();
-    });
-  </script>
-@endpush

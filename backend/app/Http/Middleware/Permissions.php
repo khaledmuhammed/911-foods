@@ -41,7 +41,7 @@ class Permissions
     {
         $permission = $request->route()->getName();
         
-        if($permission == 'market_earning.orders' || $permission == 'marketsPayouts.view'){
+        if($permission == 'market_earning.orders' || $permission =='marketsPayouts.view' || $permission == 'drivers.orders'|| $permission == 'driverPayouts.custom_create'){
             return $next($request);
         }
         if ($this->match($request->route()) && auth()->user()->canNot($permission)) {

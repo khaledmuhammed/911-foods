@@ -36,27 +36,28 @@ class MainController extends Controller
 
     public function search(Request $request)
     {
-        // $search = Market::where('name', 'like', '%' . $request->search . '%')->get();
-        // dd($search);
-        if(empty($request->search)){
+        if (empty($request->search)) {
             return response('Search not Working!', 404)->header('Content-Type', 'text/plain');
         }
-        return response()->json([
-            "data" => Market::where('name', 'like', '%' . $request->search . '%')
-                ->get()
-                ->map
-                ->format()
-        ]);
+        $returner = [];
+        $returner['success'] = true;
+        $returner['data'] =
+            Market::where('name', 'like', '%' . $request->search . '%')->with('Media')
+            ->get();
 
+        return response()->json(
+            $returner
+        );
     }
 
     public function paymob_checkout(Request $request)
     {
         // dd($request['delivery_address_id']); طالع ب 40
+        
         if (empty($request['api_token'])) {
             return response('User Token not found', 404)->header('Content-Type', 'text/plain');
         }
-        if (empty($request['delivery_address_id'])) {
+        if (empty($request['delivery_address_id']) && $request->payment_method != 'card') {
             return response('delivery Address not found', 404)->header('Content-Type', 'text/plain');
         }
 

@@ -7,6 +7,8 @@ use App\DataTables\DriverDataTable;
 use App\Http\Requests;
 use App\Http\Requests\CreateDriverRequest;
 use App\Http\Requests\UpdateDriverRequest;
+use App\Models\Driver;
+use App\Models\Order;
 use App\Repositories\DriverRepository;
 use App\Repositories\CustomFieldRepository;
 use App\Repositories\UserRepository;
@@ -55,7 +57,7 @@ private $userRepository;
      *
      * @return Response
      */
-    public function create()
+    public function create($id = null)
     {
         $this->userRepository->pushCriteria(new DriversCriteria());
         $drivers = $this->userRepository->all();
@@ -110,6 +112,33 @@ private $userRepository;
         }
 
         return view('drivers.show')->with('driver', $driver);
+    }
+    /**
+     * Display the specified Driver orders.
+     *
+     * @param  int $id
+     *
+     * @return Response
+     */
+    public function view($id)
+    {
+        // dd($id);        
+        $driver = $this->driverRepository->findWithoutFail($id);
+        if (empty($driver)) {
+            Flash::error('Driver not found');
+
+            return redirect(route('drivers.index'));
+        }
+
+        $orders = Order::where('driver_id', $driver->user_id)->with('ProductOrders')->get();
+        $driver['total_cash'] = 0;
+        foreach ($orders as $order ) {
+            if($order->payment->status == 'Paid'){
+                $driver['total_cash'] += ($order->productOrders[0]['quantity'] *  $order->productOrders[0]['price']) + $order['delivery_fee'] + $order['tax'];
+            }
+        }
+
+        return view('drivers.show_orders')->with(['driver' => $driver, 'orders' => $orders]);
     }
 
     /**

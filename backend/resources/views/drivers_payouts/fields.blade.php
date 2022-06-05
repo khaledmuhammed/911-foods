@@ -6,7 +6,7 @@
 <div class="form-group row ">
   {!! Form::label('user_id', trans("lang.drivers_payout_user_id"),['class' => 'col-3 control-label text-right']) !!}
   <div class="col-9">
-    {!! Form::select('user_id', $user, null, ['class' => 'select2 form-control']) !!}
+    {!! Form::select('user_id', $user, $user_id, ['class' => 'select2 form-control']) !!}
     <div class="form-text text-muted">{{ trans("lang.drivers_payout_user_id_help") }}</div>
   </div>
 </div>
@@ -21,12 +21,13 @@
   </div>
 </div>
 
-
+<input type="hidden" name="driver_id" value="{{$driver_id}}">
 <!-- Amount Field -->
 <div class="form-group row ">
   {!! Form::label('amount', trans("lang.drivers_payout_amount"), ['class' => 'col-3 control-label text-right']) !!}
   <div class="col-9">
-      {!! Form::number('amount', null,  ['class' => 'form-control','step'=>"any",'placeholder'=>  trans("lang.drivers_payout_amount_placeholder")]) !!}
+      {!! Form::number('amount', $driver_earnings,  ['class' => 'form-control','step'=>"any",'placeholder'=>  trans("lang.drivers_payout_amount_placeholder")]) !!}
+      {{-- {!! Form::number('amount', null,  ['class' => 'form-control','step'=>"any",'placeholder'=>  trans("lang.drivers_payout_amount_placeholder")]) !!} --}}
     <div class="form-text text-muted">
       {{ trans("lang.drivers_payout_amount_help") }}
     </div>

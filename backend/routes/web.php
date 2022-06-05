@@ -154,6 +154,7 @@ Route::middleware('auth')->group(function () {
     Route::resource('drivers', 'DriverController')->except([
         'show'
     ]);
+    Route::get('/driver/{driver_id}/orders', 'DriverController@view')->name('drivers.orders');
 
     Route::resource('earnings', 'EarningController')->except([
         'show','edit','update'
@@ -164,6 +165,7 @@ Route::middleware('auth')->group(function () {
     Route::resource('driversPayouts', 'DriversPayoutController')->except([
         'show','edit','update'
     ]);
+    Route::get('/driversPayouts/create/{driver_id}', 'DriversPayoutController@custom_create')->name('driverPayouts.custom_create');
 
     Route::resource('marketsPayouts', 'MarketsPayoutController')->except([
         'show','edit','update'
@@ -173,6 +175,7 @@ Route::middleware('auth')->group(function () {
     Route::resource('optionGroups', 'OptionGroupController')->except([
         'show'
     ]);
+    
 
     Route::post('options/remove-media','OptionController@removeMedia');
 

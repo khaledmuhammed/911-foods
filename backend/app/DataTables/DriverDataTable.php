@@ -42,6 +42,11 @@ class DriverDataTable extends DataTable
             ->editColumn('available', function ($driver) {
                 return getBooleanColumn($driver, 'available');
             })
+            ->editColumn('total_orders', function ($driver) {
+                
+                // return getBooleanColumn($driver, 'available');
+                return $driver->total_orders;
+            })
             ->addColumn('action', 'drivers.datatables_actions')
             ->rawColumns(array_merge($columns, ['action']));
 

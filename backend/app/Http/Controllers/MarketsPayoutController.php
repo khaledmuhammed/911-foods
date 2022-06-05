@@ -169,19 +169,23 @@ class MarketsPayoutController extends Controller
         $market_id = $marketsPayout['market_id'];
         $end_date =  $marketsPayout['paid_date']->toDateTimeString();
         $start_date = null;
-        $last_payout = MarketsPayout::where('market_id', $market_id)->where('paid_date', '>', $end_date)->first();
+        $last_payout = MarketsPayout::where('market_id', $market_id)->where('paid_date', '<', $end_date)->latest('paid_date')->first();
+        // dd($last_payout);
         if($last_payout){
             $start_date = $last_payout['paid_date']->toDateTimeString();
         }
         $market = Market::where('id', $marketsPayout['market_id'])->get()[0];
         $orders = [];
         foreach ($market->products as $product) {
-            $ProductOrders = ProductOrder::where('product_id', $product->id)->with('order')->get();
+            $start_date = $start_date == null ? '2022-01-01' : $start_date;
+
+            $ProductOrders = ProductOrder::where('product_id', $product->id)->where('updated_at','>', $start_date)->where('updated_at', '<', $end_date)->with('order')->get();
+            // dd($ProductOrders);
             foreach ($ProductOrders as $ProductOrder) {
                 $order_date = $ProductOrder->order->updated_at->toDateTimeString();
-                // dd($end_date.'||||||||||||||'. $order_date.'||||||||'. $start_date);
+                // dd($start_date.'|||||'. $order_date.'||||'. $end_date);
+                // case only one payout
                 if($start_date == null){
-                    // dd($start_date);
                     if($end_date > $order_date){
                         $ProductOrder->order['delivery_fee'] = $market['delivery_fee'];
                         $ProductOrder->order['sub_total'] = $ProductOrder['quantity'] * $ProductOrder['price'];
@@ -191,7 +195,7 @@ class MarketsPayoutController extends Controller
                         array_push($orders, $ProductOrder->order);
                     }
                 }
-                if($start_date > $order_date && $end_date < $order_date  ){
+                if($start_date < $order_date && $end_date > $order_date  ){
                     $ProductOrder->order['delivery_fee'] = $market['delivery_fee'];
                     $ProductOrder->order['sub_total'] = $ProductOrder['quantity'] * $ProductOrder['price'];
                     $ProductOrder->order['tax'] = $market['admin_commission'];

@@ -235,6 +235,10 @@ class Market extends Model implements HasMedia
     {
         return $this->hasMany(\App\Models\MarketReview::class, 'market_id');
     }
+    public function marketPayouts()
+    {
+        return $this->hasMany(\App\Models\marketPayout::class, 'market_id');
+    }
 
     /**
      * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany

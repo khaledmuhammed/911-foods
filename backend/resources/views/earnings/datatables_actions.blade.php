@@ -11,11 +11,11 @@
       </a>
     @endcan
 
-  @can('earnings.edit')
+  {{-- @can('earnings.edit')
   <a data-toggle="tooltip" data-placement="bottom" title="{{trans('lang.earning_edit')}}" href="{{ route('earnings.edit', $id) }}" class='btn btn-link'>
     <i class="fa fa-edit"></i>
   </a>
-  @endcan
+  @endcan --}}
 
   @can('earnings.destroy')
 {!! Form::open(['route' => ['earnings.destroy', $id], 'method' => 'delete']) !!}

@@ -56,11 +56,11 @@
                                 <th scope="col">Client</th>
                                 <th scope="col">Order Status</th>
                                 <th scope="col">Method</th>
-                                <th scope="col">Delivery Fee</th>
-                                <th scope="col">Tax</th>
+                                {{-- <th scope="col">Delivery Fee</th> --}}
+                                {{-- <th scope="col">Tax</th> --}}
                                 <th scope="col">Payment Status</th>
                                 <th scope="col">Sub Total</th>
-                                <th scope="col">Total</th>
+                                {{-- <th scope="col">Total</th> --}}
                                 <th scope="col">Updated at</th>
                             </tr>
                         </thead>
@@ -71,11 +71,11 @@
                                     <td>{{ $order->user->name }}</td>
                                     <td><span class="badge badge-success">{{ $order->orderStatus->status }}</span></td>
                                     <td>{{ $order->payment->method }}</td>
-                                    <td>{{ $order['delivery_fee'] }}</td>
-                                    <td>{{ $order['tax'] }}</td>
+                                    {{-- <td>{{ $order['delivery_fee'] }}</td> --}}
+                                    {{-- <td>{{ $order['tax'] }}</td> --}}
                                     <td><span class="badge badge-success">{{ $order->payment->status }}</span></td>
                                     <td>{{ $order['sub_total'] }}</td>
-                                    <td>{{ $order['total'] }}</td>
+                                    {{-- <td>{{ $order['total'] }}</td> --}}
                                     <td>{{ $order['updated_at'] }}</td>
                                 </tr>
                             @endforeach

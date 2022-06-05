@@ -30,11 +30,11 @@
         <li class="nav-item">
           <a class="nav-link active" href="{!! url()->current() !!}"><i class="fa fa-list mr-2"></i>{{trans('lang.drivers_payout_table')}}</a>
         </li>
-        @can('driversPayouts.create')
+        {{-- @can('driversPayouts.create')
         <li class="nav-item">
           <a class="nav-link" href="{!! route('driversPayouts.create') !!}"><i class="fa fa-plus mr-2"></i>{{trans('lang.drivers_payout_create')}}</a>
         </li>
-        @endcan
+        @endcan --}}
         @include('layouts.right_toolbar', compact('dataTable'))
       </ul>
     </div>

@@ -46,11 +46,16 @@ class UpdateOrderDriverTable
             if (!empty($driver)) {
                 if ($event->updatedOrder->payment->status == 'Paid' && $event->updatedOrder->orderStatus->id == 5) {
                     $driver->total_orders++;
-                    $driver->earning += $event->updatedOrder->delivery_fee * $driver->delivery_fee / 100;
+                    $driver->earning += $event->updatedOrder->delivery_fee;
                     $driver->save();
                 } elseif ($event->oldStatus == 'Paid') {
                     $driver->total_orders--;
-                    $driver->earning -= $event->updatedOrder->delivery_fee * $driver->delivery_fee / 100;
+                    if($driver->earning == 0.00){
+                        $driver->earning = 0.00;
+                    }else{
+                        $driver->earning -= $event->updatedOrder->delivery_fee;
+                    }
+                    // $driver->earning -= $event->updatedOrder->delivery_fee * $driver->delivery_fee / 100;
                     $driver->save();
                 }
             }

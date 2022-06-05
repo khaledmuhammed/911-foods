@@ -44,27 +44,21 @@ class Market extends Model implements HasMedia
     {
         return $this->belongsToMany(\App\Models\Field::class, 'market_fields');
     }
+    public function format_api()
+    {
+        return  $this->fields && $this->fields()->first() ? [
+            $this,
+            'cover' => $this->getFirstMediaUrl('image'),
+            'rate' => $this->rate,
+            'field' => $this->fields()->first()->name
+        ] : [
+            'market' => $this,
+            'cover' => $this->getFirstMediaUrl('image'),
+            'rate' => $this->rate,
+        ];
+    }
     public function format()
     {
-        // $arr = $this;
-        // $arr['cover'] = $this->getFirstMediaUrl('image');
-        // $arr['rate'] = $this->rate;
-        // $arr['media'] = $this->fields->first()->name;
-        // return  $arr;
-        // $this->fields = $this->fields->first();
-        // $this->fields = $format;
-
-        // return  $this->fields && $this->fields->first() ? [
-        //     'data' => $this,
-        //     'cover' => $this->getFirstMediaUrl('image'),
-        //     'rate' => $this->rate,
-        //     'media' => $this->fields->first()->name
-        // ] : [
-        //     'data' => $this,
-        //     'cover' => $this->getFirstMediaUrl('image'),
-        //     'rate' => $this->rate,
-        // ];
-
         return  $this->fields && $this->fields()->first() ? [
             'market' => $this,
             'cover' => $this->getFirstMediaUrl('image'),

@@ -31,15 +31,15 @@ class DriversPayoutController extends Controller
     private $customFieldRepository;
 
     /**
-  * @var UserRepository
-  */
-private $userRepository;
+     * @var UserRepository
+     */
+    private $userRepository;
     /**
      * @var DriverRepository
      */
     private $driverRepository;
 
-    public function __construct(DriversPayoutRepository $driversPayoutRepo, DriverRepository $driverRepository, CustomFieldRepository $customFieldRepo , UserRepository $userRepo)
+    public function __construct(DriversPayoutRepository $driversPayoutRepo, DriverRepository $driverRepository, CustomFieldRepository $customFieldRepo, UserRepository $userRepo)
     {
         parent::__construct();
         $this->driversPayoutRepository = $driversPayoutRepo;
@@ -64,17 +64,45 @@ private $userRepository;
      *
      * @return Response
      */
-    public function create()
+    public function create($id = null)
     {
         $this->userRepository->pushCriteria(new DriversCriteria());
-        $user = $this->userRepository->pluck('name','id');
-        
-        $hasCustomField = in_array($this->driversPayoutRepository->model(),setting('custom_field_models',[]));
-            if($hasCustomField){
-                $customFields = $this->customFieldRepository->findByField('custom_field_model', $this->driversPayoutRepository->model());
-                $html = generateCustomField($customFields);
-            }
-        return view('drivers_payouts.create')->with("customFields", isset($html) ? $html : false)->with("user",$user);
+        $user = $this->userRepository->pluck('name', 'id');
+
+        $hasCustomField = in_array($this->driversPayoutRepository->model(), setting('custom_field_models', []));
+        if ($hasCustomField) {
+            $customFields = $this->customFieldRepository->findByField('custom_field_model', $this->driversPayoutRepository->model());
+            $html = generateCustomField($customFields);
+        }
+        return view('drivers_payouts.create')->with("customFields", isset($html) ? $html : false)->with("user", $user);
+    }
+    /**
+     * Show the form for creating a new DriversPayout.
+     *
+     * @return Response
+     */
+    public function custom_create($id = null)
+    {
+        $driver = $this->driverRepository->findWithoutFail($id);
+        if (!$driver) {
+            $driver->earning = 0;
+        }
+        // dd($driver);
+        $this->userRepository->pushCriteria(new DriversCriteria());
+        $user = $this->userRepository->pluck('name', 'id');
+
+        $hasCustomField = in_array($this->driversPayoutRepository->model(), setting('custom_field_models', []));
+        if ($hasCustomField) {
+            $customFields = $this->customFieldRepository->findByField('custom_field_model', $this->driversPayoutRepository->model());
+            $html = generateCustomField($customFields);
+        }
+        // dd($driver->user->id);
+        return view('drivers_payouts.create')->with("customFields", isset($html) ? $html : false)->with([
+            "driver_id" => $driver->id,
+            "user_id" => $driver->user->id,
+            "user" => $user,
+            'driver_earnings' => $driver->earning
+        ]);
     }
 
     /**
@@ -87,25 +115,27 @@ private $userRepository;
     public function store(CreateDriversPayoutRequest $request)
     {
         $input = $request->all();
+        // dd($input);
+
         $input['paid_date'] = Carbon::now();
         $this->driverRepository->pushCriteria(new FilterByUserCriteria($input['user_id']));
         $driverEarning = $this->driverRepository->first();
+        // dd($input['user_id'] . '||||||||||||||' . $driverEarning);
 
-        if($input['amount'] > $driverEarning->earning){
+        if ($input['amount'] > $driverEarning->earning) {
             Flash::error('The payout amount must be less than driver earning');
             return redirect()->back()->withInput($input);
         }
         $customFields = $this->customFieldRepository->findByField('custom_field_model', $this->driversPayoutRepository->model());
         try {
-            $this->driverRepository->update(['earning'=>$driverEarning->earning - $input['amount']], $driverEarning->id);
+            $this->driverRepository->update(['earning' => $driverEarning->earning - $input['amount']], $driverEarning->id);
             $driversPayout = $this->driversPayoutRepository->create($input);
-            $driversPayout->customFieldsValues()->createMany(getCustomFieldsValues($customFields,$request));
-            
+            $driversPayout->customFieldsValues()->createMany(getCustomFieldsValues($customFields, $request));
         } catch (ValidatorException $e) {
             Flash::error($e->getMessage());
         }
 
-        Flash::success(__('lang.saved_successfully',['operator' => __('lang.drivers_payout')]));
+        Flash::success(__('lang.saved_successfully', ['operator' => __('lang.drivers_payout')]));
 
         return redirect(route('driversPayouts.index'));
     }
@@ -140,22 +170,22 @@ private $userRepository;
     public function edit($id)
     {
         $driversPayout = $this->driversPayoutRepository->findWithoutFail($id);
-        $user = $this->userRepository->pluck('name','id');
-        
+        $user = $this->userRepository->pluck('name', 'id');
+
 
         if (empty($driversPayout)) {
-            Flash::error(__('lang.not_found',['operator' => __('lang.drivers_payout')]));
+            Flash::error(__('lang.not_found', ['operator' => __('lang.drivers_payout')]));
 
             return redirect(route('driversPayouts.index'));
         }
         $customFieldsValues = $driversPayout->customFieldsValues()->with('customField')->get();
         $customFields =  $this->customFieldRepository->findByField('custom_field_model', $this->driversPayoutRepository->model());
-        $hasCustomField = in_array($this->driversPayoutRepository->model(),setting('custom_field_models',[]));
-        if($hasCustomField) {
+        $hasCustomField = in_array($this->driversPayoutRepository->model(), setting('custom_field_models', []));
+        if ($hasCustomField) {
             $html = generateCustomField($customFields, $customFieldsValues);
         }
 
-        return view('drivers_payouts.edit')->with('driversPayout', $driversPayout)->with("customFields", isset($html) ? $html : false)->with("user",$user);
+        return view('drivers_payouts.edit')->with('driversPayout', $driversPayout)->with("customFields", isset($html) ? $html : false)->with("user", $user);
     }
 
     /**
@@ -178,17 +208,17 @@ private $userRepository;
         $customFields = $this->customFieldRepository->findByField('custom_field_model', $this->driversPayoutRepository->model());
         try {
             $driversPayout = $this->driversPayoutRepository->update($input, $id);
-            
-            
-            foreach (getCustomFieldsValues($customFields, $request) as $value){
+
+
+            foreach (getCustomFieldsValues($customFields, $request) as $value) {
                 $driversPayout->customFieldsValues()
-                    ->updateOrCreate(['custom_field_id'=>$value['custom_field_id']],$value);
+                    ->updateOrCreate(['custom_field_id' => $value['custom_field_id']], $value);
             }
         } catch (ValidatorException $e) {
             Flash::error($e->getMessage());
         }
 
-        Flash::success(__('lang.updated_successfully',['operator' => __('lang.drivers_payout')]));
+        Flash::success(__('lang.updated_successfully', ['operator' => __('lang.drivers_payout')]));
 
         return redirect(route('driversPayouts.index'));
     }
@@ -212,12 +242,12 @@ private $userRepository;
 
         $this->driversPayoutRepository->delete($id);
 
-        Flash::success(__('lang.deleted_successfully',['operator' => __('lang.drivers_payout')]));
+        Flash::success(__('lang.deleted_successfully', ['operator' => __('lang.drivers_payout')]));
 
         return redirect(route('driversPayouts.index'));
     }
 
-        /**
+    /**
      * Remove Media of DriversPayout
      * @param Request $request
      */
@@ -226,7 +256,7 @@ private $userRepository;
         $input = $request->all();
         $driversPayout = $this->driversPayoutRepository->findWithoutFail($input['id']);
         try {
-            if($driversPayout->hasMedia($input['collection'])){
+            if ($driversPayout->hasMedia($input['collection'])) {
                 $driversPayout->getFirstMedia($input['collection'])->delete();
             }
         } catch (\Exception $e) {

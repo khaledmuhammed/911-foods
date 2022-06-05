@@ -16,6 +16,7 @@ use App\Repositories\EarningRepository;
 use Illuminate\Support\Facades\Response;
 use App\Http\Requests\CreateEarningRequest;
 use App\Http\Requests\UpdateEarningRequest;
+use App\Models\MarketsPayout;
 use App\Models\ProductOrder;
 use App\Repositories\CustomFieldRepository;
 use Prettus\Validator\Exceptions\ValidatorException;
@@ -135,7 +136,9 @@ private $marketRepository;
             return redirect(route('earnings.index'));
         }
         $market = Market::where('id', $earning['market_id'])->get()[0];
-
+        $market_last_payout = MarketsPayout::where('market_id', $market->id)->latest('paid_date')->first();
+        // dd($market_last_payout);
+        
         if (empty($market)) {
             Flash::error('Market not found');
 
@@ -146,12 +149,26 @@ private $marketRepository;
         foreach ($market->products as $product ) {
             $ProductOrders = ProductOrder::where('product_id', $product->id)->with('order')->get();
             foreach ($ProductOrders as $ProductOrder) {
-                $ProductOrder->order['delivery_fee'] = $market['delivery_fee'];
-                $ProductOrder->order['sub_total'] = $ProductOrder['quantity'] * $ProductOrder['price'];
-                $ProductOrder->order['tax'] = $market['admin_commission'];
-                $ProductOrder->order['tax'] = $ProductOrder->order['sub_total'] * $ProductOrder->order['tax'] / 100;
-                $ProductOrder->order['total'] = $ProductOrder->order['sub_total'] + $ProductOrder->order['tax'] + $ProductOrder->order['delivery_fee'];
-                array_push($orders, $ProductOrder->order);
+                // check if there is market payouts before or not
+                if($market_last_payout != null){
+                    // get the orders before last market payout
+                    $payout_date = $market_last_payout['paid_date']->toDateTimeString();
+                    if($ProductOrder->order['updated_at'] > $payout_date){
+                        $ProductOrder->order['delivery_fee'] = $market['delivery_fee'];
+                        $ProductOrder->order['sub_total'] = $ProductOrder['quantity'] * $ProductOrder['price'];
+                        $ProductOrder->order['tax'] = $market['admin_commission'];
+                        $ProductOrder->order['tax'] = $ProductOrder->order['sub_total'] * $ProductOrder->order['tax'] / 100;
+                        $ProductOrder->order['total'] = $ProductOrder->order['sub_total'] + $ProductOrder->order['tax'] + $ProductOrder->order['delivery_fee'];
+                        array_push($orders, $ProductOrder->order);
+                    }
+                }else{
+                    $ProductOrder->order['delivery_fee'] = $market['delivery_fee'];
+                    $ProductOrder->order['sub_total'] = $ProductOrder['quantity'] * $ProductOrder['price'];
+                    $ProductOrder->order['tax'] = $market['admin_commission'];
+                    $ProductOrder->order['tax'] = $ProductOrder->order['sub_total'] * $ProductOrder->order['tax'] / 100;
+                    $ProductOrder->order['total'] = $ProductOrder->order['sub_total'] + $ProductOrder->order['tax'] + $ProductOrder->order['delivery_fee'];
+                    array_push($orders, $ProductOrder->order);
+                }
             }
         }
         return view('earnings.show_orders')->with(['earning' => $earning,
