@@ -75,20 +75,62 @@ class HomeController extends Controller
     }
     public function contact_us_store(Request $request)
     {
-        // dd($request);
+        $filename = null;
+        if($request->file('image') != null){
+            //Request File
+            $file = $request->file('image');
+            //Destination
+            $destination = 'public/images/';
+            //Define the name
+            $name = "image";
+            //Get file extension 
+            $extension = $file->getClientOriginalExtension();
+            //join the name you set with the extension
+            $filename = $name . '.' . $extension;
+            //after that move the file to the directory
+            $file->move($destination, $filename);
+        }
         $data = [
             'name' => $request->name,
+            'market_name' => null,
             'email' => $request->email,
             'phone' => $request->phone,
             'message' => $request->message,
+            'image' => $filename
         ];
-        // dd($data);
+        
+        // dd( 'public/images/' . $data['image']);
+        try {
+            // dd('hi');
+            if($request->image){
+                Mail::to('info@911-foods.com')->send(new ContactMail($data));
+                // Mail::to('info@911-foods.com')->send(new ContactMail($data))->attach($data['image']);
+            }else{
+                Mail::to('info@911-foods.com')->send(new ContactMail($data));
+            }
+        } catch (\Throwable $th) {
+            dd($th->getMessage());
+        }
+        
+        
+        Session::flash('message', 'We received your message and we will reply to you as soon as possible, Thank you.');
+        Session::flash('alert-class', 'alert-success');
+        return Redirect::back();
+    }
+
+    public function contact_us_market_store(Request $request)
+    {
+        // dd($request);
+        $data = [
+            'name' => $request->name,
+            'market_name' => $request->market_name,
+            'branches_count' => $request->branches_count,
+            'phone' => $request->phone,
+            'message' => $request->message,
+        ];
         try {
             // dd('hi');
             Mail::to('info@911-foods.com')->send(new ContactMail($data));
-            // if (Mail::failures()) {
-            //     return response()->Fail('error');
-            // }
         } catch (\Throwable $th) {
             dd($th->getMessage());
         }

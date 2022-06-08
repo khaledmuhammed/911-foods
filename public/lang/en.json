@@ -50,7 +50,7 @@
   "No Products is found": "No Products is found",
   "No Product is found": "No Product is found",
   "products_header_description": "Lorem ipsum dolor sit, amet consectetur adipisicing elit",
-  "indexPage_footer_banner_description": "if you are  interested in working with us , contact us now",
+  "indexPage_footer_banner_description": "if you are  interested to send your feedback or you facing a problem, contact us now",
   "Popular Markets": "Popular Markets",
   "Popular Markets Description": "Lorem ipsum dolor sit, amet consectetur adipisicing elit",
   "More than": "More than {int} Market",
@@ -174,13 +174,16 @@
   "Arabic": "Arabic",
   "French": "French",
   "All copyrights reserved": "All copyrights reserved",
-  "Are you a Rider": "Are you a Rider ",
+  "Are you a Rider": "Are you a User ",
   "Are you a vendor": "Are you a  Market",
   "Happy to Contact": "We would love to hear from you\n",
   "Contact description": "Please submit your information and we will get back to you.",
   "Help description": "Need help or have any query? Don't hesitate, you can directly shoot us an",
   "To Get More Info": "or  page to get more information about our site.",
   "Edit My account": "Edit My account",
-  "Edit": "Edit"
+  "Edit": "Edit",
+  "market_name": "Market Name",
+  "branches_count": "Number Of Branches",
+  "attach_image": "Attach a picture if any"
   
 }

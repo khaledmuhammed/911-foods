@@ -28,8 +28,24 @@ class ContactMail extends Mailable
      */
     public function build()
     {
-        return $this->view('email')
-        ->subject('A new contact email')
+        // dd($this->data['image']);
+        if($this->data['market_name'] == null){
+            // users email
+            if($this->data['image']){
+                return $this->view('email')
+                ->subject('A new contact email')
+                ->from('info@911-foods.com')
+                ->attach('public/images/' . $this->data['image'])
+                ->with('data', $this->data);
+            }
+            return $this->view('email')
+                ->subject('A new contact email')
+                ->from('info@911-foods.com')
+                ->with('data', $this->data);
+        }
+        // markets email
+        return $this->view('market_email')
+        ->subject('A new market contact email')
         ->from('info@911-foods.com')
         ->with('data', $this->data);
     }

@@ -51,7 +51,7 @@
   "No Products is found": "لا يوجد منتاجات",
   "No Product is found": "لا يوجد منتج",
   "products_header_description": "Lorem ipsum dolor sit, amet consectetur adipisicing elit",
-  "indexPage_footer_banner_description": "تواصل معنا اذا كنت مهتما بالعمل معنا",
+  "indexPage_footer_banner_description": "إذا كنت مهتمًا بإرسال ملاحظاتك أو كنت تواجه مشكلة ، فاتصل بنا الآن",
   "Popular Markets": "مطاعم شهيرة",
   "Popular Markets Description": "Lorem ipsum dolor sit, amet consectetur adipisicing elit",
   "Top Rated Products": "افضل المنتاجات",
@@ -174,12 +174,15 @@
   "French": "French",
   "All copyrights reserved": "جميع الحقوق محفوظة",
   "Are you a Rider": "هل انت سائق  ؟",
-  "Are you a vendor": "هل انت  بائع ؟",
+  "Are you a vendor": "هل انت  مستخدم ؟",
   "Happy to Contact": "نحن سعداء بتواصلك معنا",
   "Contact description": "سجل بياناتك وسوف نقوم بالرد عليك فى اقرب وقت",
   "Help description": "بحاجة الى مساعدة او لديك اي استفسار؟ لا تتردد ، يمكنك التواصل معنا مباشرة عبر",
   "To Get More Info": "للحصول على المزيد من المعلومات .",
   "Edit My account": "تعديل بيانات حسابي",
-  "Edit": "تعديل"
+  "Edit": "تعديل",
+  "market_name": "إسم المطعم",
+  "branches_count": "عدد الفروع",
+  "attach_image": "إرفق صورة إذا وجد"
 }
 

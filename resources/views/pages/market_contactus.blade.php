@@ -49,7 +49,7 @@
                     </div>
                     <div class="md:flex md:-mx-4 mt-4 md:mt-10" style="display: flex;flex-direction: row-reverse;text-align: center;">
 
-                        <form class="mt-4" method="POST" action="{{route('contact-us.store')}}"  enctype="multipart/form-data">
+                        <form class="mt-4" method="POST" action="{{route('contact-us.market.store')}}"  enctype="multipart/form-data">
                             @csrf
                             <div class="md:w-2/3 md:px-4">
                                 <div class="contact-form">
@@ -58,23 +58,22 @@
                                             <input name="name" type="text" placeholder="{{__("Enter your full name")}}" style="text-align: center" class="border-2  rounded px-3 py-1 w-full focus:border-indigo-400 input" required>
                                         </div>
                                         <div class="sm:w-1/2 px-3 mb-6">
-                                            <input name="subject" type="text" placeholder="{{__("Subject")}}" style="text-align: center" class="border-2 rounded px-3 py-1 w-full focus:border-indigo-400 input" required>
+                                            <input name="market_name" type="text" placeholder="{{__("market_name")}}" style="text-align: center" class="border-2 rounded px-3 py-1 w-full focus:border-indigo-400 input" required>
                                         </div>
                                         <div class="sm:w-1/2 px-3 mb-6">
-                                            <input name="email" type="email" placeholder="{{__("Enter your Email")}}" style="text-align: center" class="border-2 rounded px-3 py-1 w-full focus:border-indigo-400 input" >
+                                            <input name="branches_count" type="number" placeholder="{{__("branches_count")}}" style="text-align: center" class="border-2 rounded px-3 py-1 w-full focus:border-indigo-400 input" >
                                         </div>
+                                        {{-- <div class="sm:w-1/2 px-3 mb-6">
+                                            <input name="email" type="email" placeholder="{{__("Enter your Email")}}" style="text-align: center" class="border-2 rounded px-3 py-1 w-full focus:border-indigo-400 input" required>
+                                        </div> --}}
                                         <div class="sm:w-1/2 px-3 mb-6">
-                                            <input name="phone" type="text" placeholder="{{__("Phone number")}}" style="text-align: center" class="border-2 rounded px-3 py-1 w-full focus:border-indigo-400 input" required>
+                                            <input name="phone" type="number" placeholder="{{__("Phone number")}}" style="text-align: center" class="border-2 rounded px-3 py-1 w-full focus:border-indigo-400 input" required>
                                         </div>
                                         <div class="sm:w-full px-3">
                                             <textarea name="message" id="message" cols="30" rows="4" style="text-align: center" placeholder="{{__("Message")}}" class="border-2 rounded px-3 py-1 w-full focus:border-indigo-400 input" required></textarea>
                                         </div>
-                                        <div class="sm:w-full px-3 form-group">
-                                            <label for="exampleFormControlFile1" class="mr-4">{{__("attach_image")}}</label>
-                                            <input type="file" name="image" id="exampleFormControlFile1"  >
-                                        </div>
                                     </div>
-                                    <div class="text-right mt-4 md:mt-12 ">
+                                    <div class="text-right mt-4 md:mt-12">
                                         <button class="border-2 border-indigo-600 rounded px-6 py-2 bg-green custom-btn-blue transition-colors duration-300">
                                             {{__("Submit")}}
                                             <i class="fas fa-chevron-right ml-2 text-sm"></i>

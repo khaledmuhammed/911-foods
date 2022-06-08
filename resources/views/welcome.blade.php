@@ -18,6 +18,7 @@
                 <div class="col-md-6 col-sm-12">
         <div class="relative   p-4 top-1/4 w-75 h-auto m-auto  bg-black rounded  ">
             <h2 class="text-white font-bold text-xl  md:text-3xl ">
+                {{-- user section --}}
                 {{ __('Are you a Rider') }}
             </h2>
             <p class="text-md text-gray-200 w-5/6">
@@ -37,7 +38,7 @@
                     {{__("indexPage_footer_banner_description")}}
                 </p>
                 <br>
-                <a href="/contact-us" class="btn bg-green custom-btn-blue md:w-1/3 ">
+                <a href="/contact-us/market" class="btn bg-green custom-btn-blue md:w-1/3 ">
                     {{ __('Contact Us') }}
                 </a>
             </div></div>

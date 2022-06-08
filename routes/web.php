@@ -34,7 +34,9 @@ Route::middleware('auth')->group(function () {
     Route::view('/my-account', 'auth.account.profile');
     Route::get('/my-account/edit/{id}', [UserController::class, 'edit']);
     Route::post('/my-account/update', [UserController::class, 'update']);
+    Route::view('/contact-us/market', 'pages.market_contactus');
     Route::view('/contact-us', 'pages.contactus');
+    Route::post('/contact-us/market/store', [HomeController::class, 'contact_us_market_store'])->name('contact-us.market.store');
     Route::post('/contact-us/store', [HomeController::class, 'contact_us_store'])->name('contact-us.store');
     Route::view('/wishlist', 'pages.wishlist');
     Route::get('/favorites/product/{skip}', [HomeController::class, 'favoriteProducts']);
