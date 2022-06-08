@@ -16,17 +16,12 @@ class App
      */
     public function handle($request, Closure $next)
     {
-        // dd($request);
-        // $order_permission = $request->route()->uri;
-        // if($order_permission == 'order'){
 
-        // }
-        // dd($permission);
         try {
             // dd(setting('app_logo', '') );
             $upload = Upload::where('uuid', setting('app_logo', ''))->first();
-            $appLogo = asset('images/logo/logo.png');
-            // dd($appLogo);
+            $appLogo = asset('images/logo/new_logo.png');
+            // $appLogo = asset('images/logo/logo.png');
             if ($upload && $upload->hasMedia('app_logo')) {
                 // $appLogo = $upload->getFirstMediaUrl('app_logo');
                 $appLogo = asset('images/logo/logo.png');

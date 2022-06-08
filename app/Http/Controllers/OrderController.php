@@ -258,7 +258,7 @@ class OrderController extends Controller
     //start paymob getway functions 
     public function credit($order)
     {
-
+        
         $db_order = Order::where('id', $order->id)->first();
 
         $token = $this->getToken();
@@ -330,7 +330,7 @@ class OrderController extends Controller
         ];
 
         $response = Http::post('https://accept.paymob.com/api/acceptance/payment_keys', $data);
-
+        
         return $response->object()->token;
     }
     public function callback(Request $request)
